@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,8 +11,9 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>MainWindow</string>
   </property>
+  <widget class="QWidget" name="centralwidget">
   <widget class="QWidget" name="Background" native="true">
    <property name="geometry">
     <rect>
@@ -172,6 +173,7 @@ color: rgb(246, 224, 181);</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+  </widget>
   </widget>
  </widget>
  <resources/>

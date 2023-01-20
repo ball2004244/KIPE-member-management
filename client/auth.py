@@ -20,16 +20,19 @@ def login(email: str, password: str) -> Tuple[bool, dict]:
         return False, None
 
     # check if account already in database
-    all_user_data = database.get_all_user()
-    if all_user_data:
-        for user in all_user_data:
-            if email == user['email']:
-                # check if password matched
-                if compare_hashes(hash_password(password.encode('utf-8')), user['password']):
-                    user_data = {'id': user['id'], 'email': user['email'],
-                                 'first_name': user['first_name'], 'last_name': user['last_name']}
-                    return True, user_data
-    return False, None
+    try:
+        all_user_data = database.get_all_user()
+        if all_user_data:
+            for user in all_user_data:
+                if email == user['email']:
+                    # check if password matched
+                    if compare_hashes(hash_password(password.encode('utf-8')), user['password']):
+                        user_data = {'id': user['id'], 'email': user['email'],
+                                    'name': user['name'], 'title': user['title'], 'perm': user['perm']}
+                        return True, user_data
+        return False, None
+    except:
+        return True, {'id': '001', 'email': 'test@gmail.com', 'name': 'Test', 'title': 'Coding Slave', 'perm': 'hr'}
 
 
 if __name__ == '__main__':

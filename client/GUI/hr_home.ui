@@ -195,6 +195,138 @@ font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
       <string>Manage Member</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="drive">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>700</y>
+       <width>50</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>ArrowCursor</cursorShape>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(102, 84, 94);
+border-radius: 30px;
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../Resource/drive_logo.png</normaloff>../Resource/drive_logo.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="resource">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>700</y>
+       <width>130</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>Resource:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="trello">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>700</y>
+       <width>50</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>ArrowCursor</cursorShape>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(102, 84, 94);
+border-radius: 20px;
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../Resource/trello_logo.png</normaloff>../Resource/trello_logo.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="facebook">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>700</y>
+       <width>50</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>ArrowCursor</cursorShape>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(102, 84, 94);
+border-radius: 30px;
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../Resource/facebook_logo.png</normaloff>../Resource/facebook_logo.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>
