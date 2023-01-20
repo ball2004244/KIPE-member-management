@@ -8,10 +8,7 @@ class HTTPMethods(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'application/json')
         self.end_headers()
 
-        content_length = int(self.headers['Content-Length'])
-        body = self.rfile.read(content_length)
-        name = json.loads(body.decode())['name']
-
+        name = self.path.split('name=')[1]
         result = database.get_user(name)
         self.wfile.write(bytes(json.dumps(result), 'utf-8'))
  
@@ -22,7 +19,7 @@ class HTTPMethods(BaseHTTPRequestHandler):
         
         content_length = int(self.headers['Content-Length'])
         body = self.rfile.read(content_length)
-        data = json.loads(body.decode())['data']
+        data = json.loads(body.decode())
 
         result = database.add_user(data)
         self.wfile.write(bytes(json.dumps(result), 'UTF-8'))
@@ -34,7 +31,7 @@ class HTTPMethods(BaseHTTPRequestHandler):
 
         content_length = int(self.headers['Content-Length'])
         body = self.rfile.read(content_length)
-        id = json.loads(body.decode())['id']
+        id = json.loads(body.decode())
 
         result = database.delete_user(id)
         self.wfile.write(bytes(json.dumps(result), 'utf-8'))
@@ -46,10 +43,9 @@ class HTTPMethods(BaseHTTPRequestHandler):
 
         content_length = int(self.headers['Content-Length'])
         body = self.rfile.read(content_length)
-        id = json.loads(body.decode())['id']
-        data = json.loads(body.decode())['data']
-
-        result = database.update_user(id, data)
+        data = json.loads(body.decode())
+        print(data)
+        result = database.update_user(data)
         self.wfile.write(bytes(json.dumps(result), 'utf-8'))
 
 if __name__ == '__main__':

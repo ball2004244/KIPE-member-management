@@ -121,11 +121,13 @@ class ConnectToMySQL():
             if self.connector:
                 self.connector.close() 
 
-    def update_user(self, id: int, new_data: dict):
+    def update_user(self, new_data: dict):
         try:
             self.connect()
             cursor = self.connector.cursor()
-            set_values = ', '.join([f"{key} = '{val}'" for key, val in new_data.items()])
+            id = new_data['id']
+            data = new_data['data']
+            set_values = ', '.join([f"{key} = '{val}'" for key, val in data.items()])
             
             query = f"UPDATE {self.database}.{self.user_table} SET {set_values} WHERE user_id = {id}"
             cursor.execute(query)

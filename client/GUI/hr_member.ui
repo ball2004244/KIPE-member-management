@@ -62,7 +62,7 @@ border-radius: 20px;
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QWidget" name="verticalLayoutWidget">
+    <widget class="QWidget" name="name_list_container" native="true">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -75,42 +75,6 @@ border-radius: 20px;
       <property name="spacing">
        <number>0</number>
       </property>
-      <item>
-       <widget class="QPushButton" name="member_button">
-        <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-background-color: rgb(246, 224, 181);
-font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
-        </property>
-        <property name="text">
-         <string>ID - FirstName Lastname</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="member_button_2">
-        <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-background-color: rgb(246, 224, 181);
-font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
-        </property>
-        <property name="text">
-         <string>ID - FirstName Lastname</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="member_button_3">
-        <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-background-color: rgb(246, 224, 181);
-font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
-        </property>
-        <property name="text">
-         <string>ID - FirstName LastName</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
     <widget class="QLineEdit" name="search">
@@ -129,22 +93,6 @@ color: black;</string>
      </property>
      <property name="text">
       <string/>
-     </property>
-    </widget>
-    <widget class="Line" name="line">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>140</y>
-       <width>380</width>
-       <height>10</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
     <widget class="QPushButton" name="enter">
@@ -184,7 +132,7 @@ border-radius: 20px;
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QWidget" name="verticalLayoutWidget_4">
+    <widget class="QWidget" name="verticalWidget_4" native="true">
      <property name="geometry">
       <rect>
        <x>360</x>
@@ -409,7 +357,7 @@ font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="formLayoutWidget">
+    <widget class="QWidget" name="formWidget" native="true">
      <property name="geometry">
       <rect>
        <x>360</x>
@@ -419,6 +367,21 @@ font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
       </rect>
      </property>
      <layout class="QFormLayout" name="add_form">
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="form_name3">
+        <property name="styleSheet">
+         <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+        </property>
+        <property name="text">
+         <string>ADD NEW MEMBER</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="name_label_2">
         <property name="styleSheet">
@@ -465,27 +428,6 @@ color: black;</string>
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QLabel" name="ID_label">
-        <property name="styleSheet">
-         <string notr="true">font: 75 14pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-</string>
-        </property>
-        <property name="text">
-         <string>ID</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="ID_field">
-        <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-font-size: 20px;
-color: black;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
        <widget class="QLabel" name="dob_label_2">
         <property name="styleSheet">
          <string notr="true">font: 75 14pt &quot;MS Shell Dlg 2&quot;; 
@@ -497,7 +439,7 @@ color: rgb(246, 224, 181);
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="3" column="1">
        <widget class="QLineEdit" name="dob_field_2">
         <property name="styleSheet">
          <string notr="true">border-radius: 20px;
@@ -506,7 +448,7 @@ color: black;</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="address_label_2">
         <property name="styleSheet">
          <string notr="true">font: 75 14pt &quot;MS Shell Dlg 2&quot;; 
@@ -518,7 +460,7 @@ color: rgb(246, 224, 181);
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="4" column="1">
        <widget class="QLineEdit" name="address_field_2">
         <property name="styleSheet">
          <string notr="true">border-radius: 20px;
@@ -527,7 +469,7 @@ color: black;</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
+      <item row="5" column="1">
        <widget class="QPushButton" name="submit_button">
         <property name="styleSheet">
          <string notr="true">border-radius: 25px;
@@ -539,22 +481,20 @@ font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QLabel" name="form_name3">
-        <property name="styleSheet">
-         <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-        </property>
-        <property name="text">
-         <string>ADD NEW MEMBER</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
      </layout>
+    </widget>
+    <widget class="Line" name="line">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>160</y>
+       <width>16</width>
+       <height>541</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
     </widget>
    </widget>
   </widget>

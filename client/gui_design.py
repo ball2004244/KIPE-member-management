@@ -1,17 +1,17 @@
 import sys
-import os 
+import os
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QUrl
-from api import database 
-
+from api import get_user, create_user, update_user, delete_user
 from auth import login
+import functools
 
 class LoginScreen(QMainWindow):
     def __init__(self):
         super(LoginScreen, self).__init__()
-        loadUi('GUI/login.ui', self) 
+        loadUi('GUI/login.ui', self)
 
         self.email.setMaxLength(45)
         self.email.returnPressed.connect(self.password.setFocus)
@@ -21,12 +21,12 @@ class LoginScreen(QMainWindow):
         self.password.returnPressed.connect(self.logIn)
 
         self.login_button.clicked.connect(self.logIn)
-    
+
     def logIn(self):
         # get email from input
         email = self.email.text().strip()
         password = self.password.text().strip()
-    
+
         if login(email, password)[0]:
             global user_data
             user_data = login(email, password)[1]
@@ -39,9 +39,10 @@ class LoginScreen(QMainWindow):
         widget_stack.addWidget(home_screen)
         widget_stack.setCurrentIndex(1)
 
+
 class HomeScreen(QMainWindow):
     def __init__(self):
-        super(HomeScreen, self).__init__() 
+        super(HomeScreen, self).__init__()
         if user_data['perm'] == 'member':
             self.memberHomeScreen()
 
@@ -49,7 +50,7 @@ class HomeScreen(QMainWindow):
             self.hrHomeScreen()
 
         self.stack = []
-        self.logout_button.clicked.connect(self.logOut)   
+        self.logout_button.clicked.connect(self.logOut)
         self.setUpAvatar()
         self.setUpResource()
 
@@ -69,10 +70,10 @@ class HomeScreen(QMainWindow):
     def setUpAvatar(self):
         self.name.setText(f"{user_data['name']}")
         self.title.setText(f"{user_data['title']}")
-        try: 
-            path = database.get_avatar(user_data['id'])['path']
-            
-            if not os.path.isfile(path): 
+        try:
+            # path = database.get_avatar(user_data['id'])['path']
+            path = ''
+            if not os.path.isfile(path):
                 raise FileNotFoundError
 
         except Exception:
@@ -82,20 +83,23 @@ class HomeScreen(QMainWindow):
 
         pixmap = QPixmap(path)
         avatar = QIcon(pixmap)
-        
+
         self.avatar.setIcon(avatar)
 
     def setUpResource(self):
-        self.trello.clicked.connect(lambda: self.openLink('https://www.example.com'))
-        self.drive.clicked.connect(lambda: self.openLink('https://www.example.com'))
-        self.facebook.clicked.connect(lambda: self.openLink('https://www.example.com'))
+        self.trello.clicked.connect(
+            lambda: self.openLink('https://www.example.com'))
+        self.drive.clicked.connect(
+            lambda: self.openLink('https://www.example.com'))
+        self.facebook.clicked.connect(
+            lambda: self.openLink('https://www.example.com'))
 
     def openLink(self, url):
         url = QUrl(url)
         open_url = QDesktopServices.openUrl(url)
         if not open_url:
             QMessageBox.warning(self, 'Error', 'Unable to open link')
-    
+
     def logOut(self):
         widget_stack.setCurrentIndex(0)
         widget_stack.removeWidget(widget_stack.widget(1))
@@ -103,7 +107,7 @@ class HomeScreen(QMainWindow):
     def goToDeadline(self):
         deadline_screen = ManageDeadlineScreen()
         widget_stack.addWidget(deadline_screen)
-        widget_stack.setCurrentIndex(2) 
+        widget_stack.setCurrentIndex(2)
 
     def goToMember(self):
         member_screen = ManageMemberScreen()
@@ -121,53 +125,54 @@ class HomeScreen(QMainWindow):
 
     def clickOnDate(self, date):
         print(f'Selected date: {date}')
-        #database.load_deadline(date)
+        # database.load_deadline(date)
 
-        # if date already in stack, means that this click is to exit 
-        if date in self.stack: 
+        # if date already in stack, means that this click is to exit
+        if date in self.stack:
             self.stack = []
             self.task_browser.setVisible(False)
-        # if date is not in stack, means this click is to open browser 
+        # if date is not in stack, means this click is to open browser
         else:
             self.stack.append(date)
             self.task_browser.setVisible(True)
-        
-        # load data to task browser 
+
+        # load data to task browser
         '''
         text = f'{database.task_name} - {database.deadline}\n Status: {database.status}\n' 
         self.task_browser.setPlainText(text)
-        '''    
+        '''
+
 
 class ManageDeadlineScreen(QMainWindow):
     def __init__(self):
-        super(ManageDeadlineScreen, self).__init__() 
+        super(ManageDeadlineScreen, self).__init__()
         loadUi('GUI/hr_deadline.ui', self)
         self.goback_button.clicked.connect(self.goToHomeScreen)
         self.stack = []
         self.task_browser.setVisible(False)
         self.task_browser.setMouseTracking(True)
         self.task_browser.enterEvent = self.moveTaskBrowser
-        
+
         self.calendar.clicked.connect(self.clickOnDate)
-    
+
     def goToHomeScreen(self):
         widget_stack.setCurrentIndex(1)
         widget_stack.removeWidget(widget_stack.widget(2))
-    
+
     def clickOnDate(self, date):
         print(f'Selected date: {date}')
-        #database.load_deadline(date)
+        # database.load_deadline(date)
 
-        # if date already in stack, means that this click is to exit 
-        if date in self.stack: 
+        # if date already in stack, means that this click is to exit
+        if date in self.stack:
             self.stack = []
             self.task_browser.setVisible(False)
-        # if date is not in stack, means this click is to open browser 
+        # if date is not in stack, means this click is to open browser
         else:
             self.stack.append(date)
             self.task_browser.setVisible(True)
-        
-        # load data to task browser 
+
+        # load data to task browser
 
         ''' For hr and admin
         text = f'{database.member_name} - {database.task_name} ({database.task_time})\n'
@@ -185,46 +190,77 @@ class ManageDeadlineScreen(QMainWindow):
 
 class ManageMemberScreen(QMainWindow):
     def __init__(self):
-        super(ManageMemberScreen, self).__init__() 
+        super(ManageMemberScreen, self).__init__()
         loadUi('GUI/hr_member.ui', self)
+
+        self.name_list_container.setMaximumSize(300, 550)
         self.goback_button.clicked.connect(self.goToHomeScreen)
-
         self.search.returnPressed.connect(self.searchMember)
+        self.address_field_2.returnPressed.connect(self.addMember)
+        self.submit_button.clicked.connect(self.addMember)
+        self.delete_button.clicked.connect(self.deleteMember)
+        self.modify_button.clicked.connect(self.updateMember)
 
-    def setUpMemberList(self):
-        pass 
+    def setUpMemberList(self, data):
+        # delete all items from list
+        for i in reversed(range(self.name_list.count())):
+            self.name_list.itemAt(i).widget().setParent(None)
+        
+        # display members as button in name_list
+        for item in data:
+            name = f"{item['user_id']} - {item['name']}"
+            button = QPushButton(name)
+            button.clicked.connect(functools.partial(self.parseMemberToModifyForm, item))
 
+            stylesheet = '''
+                border-radius: 20px;
+                background-color: rgb(246, 224, 181);
+                font: 75 18pt "MS Shell Dlg 2";
+            '''
+
+            button.setStyleSheet(stylesheet)
+            self.name_list.addWidget(button)
+
+    def parseMemberToModifyForm(self, item):
+        self.name_field.setText(item['name'])
+        self.title_field.setText(item['title'])
+        self.id_field.setText(str(item['user_id']))
+        self.dob_field.setText(item['dob'])
+        self.address_field.setText(item['address'])
+    
     def searchMember(self):
         name = self.search.text().strip()
-        print(name)
-        # display members as button in name_list 
-        #
-        #
-        #
+        data = get_user(name)
+
+        self.setUpMemberList(data)
 
     def addMember(self):
         name = self.name_field_2.text().strip()
         title = self.title_field_2.text().strip()
-        id = self.id_field_2.text().strip()
         dob = self.dob_field_2.text().strip()
         address = self.address_field_2.text().strip()
 
-        # send data to database 
-        #
-        # post
-        #
+        # send data to database
+        create_user(name, title, 'member', dob, address)
 
     def deleteMember(self):
         # delete
-        pass 
+        id = int(self.id_field.text().strip())
+        delete_user(id)
 
     def updateMember(self):
         # put
-        pass 
+        id = self.id_field.text().strip()
+        name = self.name_field_2.text().strip()
+        title = self.title_field_2.text().strip()
+        dob = self.dob_field_2.text().strip()
+        address = self.address_field_2.text().strip()
+        update_user(id, name, title, 'member', dob, address)
 
     def goToHomeScreen(self):
         widget_stack.setCurrentIndex(1)
         widget_stack.removeWidget(widget_stack.widget(2))
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
@@ -243,7 +279,3 @@ if __name__ == '__main__':
         sys.exit(app.exec_())
     except:
         print('Exiting')
-
-
-
-
