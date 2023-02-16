@@ -132,7 +132,7 @@ border-radius: 20px;
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QWidget" name="verticalWidget_4" native="true">
+    <widget class="QWidget" name="modify_form_container" native="true">
      <property name="geometry">
       <rect>
        <x>360</x>
@@ -182,7 +182,7 @@ color: rgb(246, 224, 181);
 text-align: right;</string>
           </property>
           <property name="text">
-           <string>FirstName LastName</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -216,7 +216,7 @@ color: rgb(246, 224, 181);
 text-align: right;</string>
           </property>
           <property name="text">
-           <string>Data Scientist</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -250,7 +250,7 @@ color: rgb(246, 224, 181);
 text-align: right;</string>
           </property>
           <property name="text">
-           <string>001</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -284,7 +284,7 @@ color: rgb(246, 224, 181);
 text-align: right;</string>
           </property>
           <property name="text">
-           <string>01/01/2021</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -318,7 +318,7 @@ color: rgb(246, 224, 181);
 text-align: right;</string>
           </property>
           <property name="text">
-           <string>Vietnam</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

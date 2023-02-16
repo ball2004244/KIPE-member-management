@@ -3,15 +3,19 @@ import os
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import QUrl
-from api import get_user, create_user, update_user, delete_user
+from PyQt5.QtCore import QUrl, Qt, QEvent
+from api import get_user, create_user, update_user, delete_user, get_deadline, update_deadline, delete_deadline
 from auth import login
+from datetime import datetime
 import functools
+
 
 class LoginScreen(QMainWindow):
     def __init__(self):
         super(LoginScreen, self).__init__()
         loadUi('GUI/login.ui', self)
+
+        self.setFixedSize(800, 800)
 
         self.email.setMaxLength(45)
         self.email.returnPressed.connect(self.password.setFocus)
@@ -43,6 +47,8 @@ class LoginScreen(QMainWindow):
 class HomeScreen(QMainWindow):
     def __init__(self):
         super(HomeScreen, self).__init__()
+
+        self.setFixedSize(800, 800)
         if user_data['perm'] == 'member':
             self.memberHomeScreen()
 
@@ -147,52 +153,60 @@ class ManageDeadlineScreen(QMainWindow):
     def __init__(self):
         super(ManageDeadlineScreen, self).__init__()
         loadUi('GUI/hr_deadline.ui', self)
+        self.setFixedSize(800, 800)
         self.goback_button.clicked.connect(self.goToHomeScreen)
-        self.stack = []
-        self.task_browser.setVisible(False)
-        self.task_browser.setMouseTracking(True)
-        self.task_browser.enterEvent = self.moveTaskBrowser
 
-        self.calendar.clicked.connect(self.clickOnDate)
+        self.calendar.clicked.connect(self.loadDeadline)
+        self.deadline_list.itemDoubleClicked.connect(self.updateDeadline)
+        self.add_button.clicked.connect(self.addDeadline)
+        
 
     def goToHomeScreen(self):
         widget_stack.setCurrentIndex(1)
         widget_stack.removeWidget(widget_stack.widget(2))
-
-    def clickOnDate(self, date):
-        print(f'Selected date: {date}')
-        # database.load_deadline(date)
-
-        # if date already in stack, means that this click is to exit
-        if date in self.stack:
-            self.stack = []
-            self.task_browser.setVisible(False)
-        # if date is not in stack, means this click is to open browser
-        else:
-            self.stack.append(date)
-            self.task_browser.setVisible(True)
-
-        # load data to task browser
+    
+    def loadDeadline(self):
+        self.deadline_list.clear()
+        date_selected = self.calendar.selectedDate().toPyDate()
+        tasks = get_deadline(date_selected)
+        # print(task)
+        # tasks = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5']
+        for task in tasks:
+            item = QListWidgetItem(task)
+            self.deadline_list.addItem(item)
 
         ''' For hr and admin
         text = f'{database.member_name} - {database.task_name} ({database.task_time})\n'
         self.task_browser.setPlainText(text)
         '''
+        pass 
 
-    def moveTaskBrowser(self, event):
-        cursor = QCursor()
-        pos = self.mapFromGlobal(cursor.pos())
+    def addDeadline(self):
+        name = self.name_field.text().strip()
+        date = self.date_field.text().strip()
+        status = self.status_field.text().strip()
+        # add_deadline(name, date, status)
+        pass
+    
+    def updateDeadline(self):
+        if self.deadline_list.currentItem():
+            # open a new QDialog to update deadline
+            # get data from database
+            pass 
 
-        if pos.x() >= 440:
-            self.task_browser.move(10, 320)
-        else:
-            self.task_browser.move(440, 320)
+        # update_deadline(id, name, date, status)
+        pass 
+
+    def deleteDeadline(self):
+        # delete_deadline(id)
+        pass
 
 class ManageMemberScreen(QMainWindow):
     def __init__(self):
         super(ManageMemberScreen, self).__init__()
         loadUi('GUI/hr_member.ui', self)
 
+        self.setFixedSize(800, 800)
         self.name_list_container.setMaximumSize(300, 550)
         self.goback_button.clicked.connect(self.goToHomeScreen)
         self.search.returnPressed.connect(self.searchMember)
@@ -205,29 +219,45 @@ class ManageMemberScreen(QMainWindow):
         # delete all items from list
         for i in reversed(range(self.name_list.count())):
             self.name_list.itemAt(i).widget().setParent(None)
-        
+
         # display members as button in name_list
-        for item in data:
-            name = f"{item['user_id']} - {item['name']}"
-            button = QPushButton(name)
-            button.clicked.connect(functools.partial(self.parseMemberToModifyForm, item))
+        if data:
+            for item in data:
+                name = f"{item['user_id']} - {item['name']}"
+                button = QPushButton(name)
+                button.clicked.connect(functools.partial(
+                    self.parseMemberToModifyForm, item))
 
+                stylesheet = '''
+                    border-radius: 20px;
+                    background-color: rgb(246, 224, 181);
+                    font: 75 18pt "MS Shell Dlg 2";
+                '''
+
+                button.setStyleSheet(stylesheet)
+                self.name_list.addWidget(button)
+        else:
             stylesheet = '''
-                border-radius: 20px;
-                background-color: rgb(246, 224, 181);
-                font: 75 18pt "MS Shell Dlg 2";
+                font: 75 20pt "MS Shell Dlg 2"; 
+                color: rgb(246, 224, 181);
             '''
-
-            button.setStyleSheet(stylesheet)
-            self.name_list.addWidget(button)
+            label = QLabel('No member found')
+            label.setStyleSheet(stylesheet)
+            label.setAlignment(Qt.AlignCenter)
+            self.name_list.addWidget(label)
 
     def parseMemberToModifyForm(self, item):
+        # Modify dob format
+        dob_str = datetime.strptime(
+            item['dob'], '%Y-%m-%d').strftime('%d/%m/%Y')
+
+        # set texts of Mofidy Form
         self.name_field.setText(item['name'])
         self.title_field.setText(item['title'])
         self.id_field.setText(str(item['user_id']))
-        self.dob_field.setText(item['dob'])
+        self.dob_field.setText(dob_str)
         self.address_field.setText(item['address'])
-    
+
     def searchMember(self):
         name = self.search.text().strip()
         data = get_user(name)
@@ -239,6 +269,9 @@ class ManageMemberScreen(QMainWindow):
         title = self.title_field_2.text().strip()
         dob = self.dob_field_2.text().strip()
         address = self.address_field_2.text().strip()
+
+        #reformat dob
+        dob = datetime.strptime(dob, "%d/%m/%Y").strftime("%Y-%m-%d")
 
         # send data to database
         create_user(name, title, 'member', dob, address)
@@ -271,8 +304,7 @@ if __name__ == '__main__':
 
     widget_stack.addWidget(login_screen)
 
-    widget_stack.setFixedHeight(800)
-    widget_stack.setFixedWidth(800)
+    widget_stack.setFixedSize(800, 800)
     widget_stack.show()
 
     try:

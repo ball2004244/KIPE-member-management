@@ -1,6 +1,8 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from database import database
 import json 
+import urllib.parse as urlparse
+from datetime import datetime
 
 class HTTPMethods(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -8,9 +10,23 @@ class HTTPMethods(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'application/json')
         self.end_headers()
 
-        name = self.path.split('name=')[1]
-        result = database.get_user(name)
-        self.wfile.write(bytes(json.dumps(result), 'utf-8'))
+        query_params = {}
+        if '?' in self.path:
+            query_params = dict(q.split('=') for q in self.path.split('?')[1].split('&'))
+
+        if 'name' in query_params:
+            name = query_params['name']
+            result = database.get_user(name)
+        elif 'date' in query_params:
+            raw_deadline = query_params['date']
+            decoded_deadline = urlparse.unquote(raw_deadline)
+            
+            deadline = decoded_deadline.replace('+', ' ')
+            result = database.get_deadline(deadline)
+        else:
+            result = {'error': 'Please provide either name or date parameter'}
+            
+        self.wfile.write(bytes(json.dumps(result, cls=CustomEncoder), 'utf-8'))
  
     def do_POST(self):
         self.send_response(200)
@@ -48,11 +64,16 @@ class HTTPMethods(BaseHTTPRequestHandler):
         result = database.update_user(data)
         self.wfile.write(bytes(json.dumps(result), 'utf-8'))
 
+class CustomEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        return json.JSONEncoder.default(self, obj)
+
 if __name__ == '__main__':
-    HOST = 'localhost'
-    PORT = 8000
+    HOST, PORT = 'localhost', 8000
     server = HTTPServer((HOST, PORT), HTTPMethods)
-    print('Starting server on {}:{}'.format(HOST, PORT))
+    print(f'Starting server on {HOST}:{PORT}')
     try:
         server.serve_forever()
     except KeyboardInterrupt:
