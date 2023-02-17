@@ -151,22 +151,20 @@ class ConnectToMySQL():
         try:
             self.connect()
             cursor = self.connector.cursor(dictionary=True)
-            print(date)
+            date += ' 00:00:00'
             try:
                 date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
-                print(date)
             except Exception as e:
                 print('Fail to convert date')
                 print(e)
-                date = datetime.strptime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+                date = datetime.strptime('1990-2-2 00:00:00', '%Y-%m-%d %H:%M:%S')
             
             
-            query = f'SELECT * FROM {self.database}.{self.deadline_table} WHERE deadline = "{date}"'
+            query = f'SELECT * FROM {self.database}.{self.deadline_table} WHERE YEAR(deadline) = {date.year} AND MONTH(deadline) = {date.month}'
 
             cursor.execute(query)
             result = cursor.fetchall()
             cursor.close()
-            print(result)
             return result
 
         except Exception as e:

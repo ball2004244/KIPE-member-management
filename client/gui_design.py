@@ -169,11 +169,16 @@ class ManageDeadlineScreen(QMainWindow):
         self.deadline_list.clear()
         date_selected = self.calendar.selectedDate().toPyDate()
         tasks = get_deadline(date_selected)
-        # print(task)
         # tasks = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5']
         for task in tasks:
-            item = QListWidgetItem(task)
-            self.deadline_list.addItem(item)
+            if task['task_name'] == 'No deadlines found':
+                item = QListWidgetItem(task['task_name'])
+                self.deadline_list.addItem(item)
+                continue
+
+            if str(date_selected) + ' 00:00:00' == str(task['deadline']):
+                item = QListWidgetItem(task['task_name'])
+                self.deadline_list.addItem(item)
 
         ''' For hr and admin
         text = f'{database.member_name} - {database.task_name} ({database.task_time})\n'
@@ -310,4 +315,8 @@ if __name__ == '__main__':
     try:
         sys.exit(app.exec_())
     except:
+        # delete all extra files created when running the program
+        if os.path.exists('cache.json'):
+            os.remove('cache.json')
+
         print('Exiting')

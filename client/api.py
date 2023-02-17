@@ -57,17 +57,45 @@ def delete_user(id: int):
 '''MANIPULATING DEADLINES'''
 
 def get_deadline(date: datetime.date):
-    # formatted_date = datetime.strptime(date, r'%Y-%m-%d')
-    # print(formatted_date)
-    data = {'date': date}
-    response = requests.get(URL, params=data)
 
-    if response.status_code == 200:
-        if not response.json():
-            return ['No deadlines found']
-        return response.json()
+    # check if the current month is already in cache 
+    # if not, get the deadlines from the database
+    
+    try:
+        with open('cache.json', 'r') as cache:
+            cache_data = json.load(cache)
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
+        cache_data = {}
+
+    if str((date.year, date.month)) not in cache_data:
+        data = {'date': date}
+        response = requests.get(URL, params=data)
+
+        if response.status_code == 200:
+            content = response.content.decode('utf-8')
+            if content:
+                try:
+                    json_data = json.loads(content)
+                except json.decoder.JSONDecodeError as e:
+                    print(f'Error decoding JSON: {e}')
+                    json_data = []
+            else:
+                json_data = []
+
+            if not json_data:
+                cache_data[str((date.year, date.month))] = [{'task_name': 'No deadlines found'}]
+            else:
+                cache_data[str((date.year, date.month))] = json_data
+
+            with open('cache.json', 'w') as cache:
+                json.dump(cache_data, cache)
+
+            return cache_data[str((date.year, date.month))]
+        else:
+            print("Error: " + str(response.status_code))
+
     else:
-        print("Error: " + str(response.status_code))
+        return cache_data[str((date.year, date.month))]
 
 def update_deadline(id: int, name: str, date: str, status: str):
     data = {'id': id,
