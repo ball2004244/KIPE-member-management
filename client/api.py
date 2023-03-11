@@ -1,6 +1,7 @@
 import requests
 import json
 from datetime import datetime
+from hashing import hash_password
 URL = "http://localhost:8000"
 
 '''MANIPULATING USERS'''
@@ -125,6 +126,17 @@ def update_deadline(id: int, name: str, date: str, status: str):
 def delete_deadline(id: int):
     data = {'task_id': id}
     response = requests.delete(URL, params=data)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Error: " + str(response.status_code))
+
+'''LOGIN LOGIC'''
+def login(email: str, password:str):
+    params = {'login': True}
+    data = {'email': email, 'password': hash_password(password)}
+    response = requests.post(URL, params=params, json=data)
 
     if response.status_code == 200:
         return response.json()

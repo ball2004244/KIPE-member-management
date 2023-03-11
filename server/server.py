@@ -45,6 +45,11 @@ class HTTPHandler(BaseHTTPRequestHandler):
             body = self.rfile.read(content_length)
             data = json.loads(body.decode())
             result = database.add_deadline(data)
+        elif 'login' in query_params:
+            content_length = int(self.headers['Content-Length'])
+            body = self.rfile.read(content_length)
+            data = json.loads(body.decode())
+            result = database.get_login_detail(data)
         else:
             result = {'error': 'Please provide valid parameters'}
         

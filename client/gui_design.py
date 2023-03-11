@@ -4,8 +4,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QUrl, Qt, QEvent
-from api import get_user, create_user, update_user, delete_user, get_deadline, update_deadline, delete_deadline
-from auth import login
+from api import get_user, create_user, update_user, delete_user, get_deadline, update_deadline, delete_deadline, login
 from datetime import datetime
 import functools
 
@@ -31,9 +30,13 @@ class LoginScreen(QMainWindow):
         email = self.email.text().strip()
         password = self.password.text().strip()
 
-        if login(email, password)[0]:
+        if not (len(email) and len(password)):
+            print('You must fill in both fields')
+
+        if login(email, password):
             global user_data
-            user_data = login(email, password)[1]
+            user_data = login(email, password)
+            print(user_data)
             self.goToHomeScreen()
         else:
             print('Incorrect Email or Password')

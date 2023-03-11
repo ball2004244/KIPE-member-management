@@ -1,5 +1,7 @@
 import mysql.connector
 from datetime import datetime
+from auth import verify_login, hash_password
+
 # Communicate with database
 
 
@@ -12,6 +14,7 @@ class ConnectToMySQL():
         self.database = 'kipe_vietnam'
         self.user_table = 'user'
         self.deadline_table = 'task'
+        self.login_table = 'login'
         self.connector = None
 
     def connect(self) -> None:
@@ -36,7 +39,7 @@ class ConnectToMySQL():
             if self.connector:
                 self.connector.close()
 
-    def get_user(self, name=None):
+    def get_user(self, name: str):
         try:
             self.connect()
             cursor = self.connector.cursor(dictionary=True)
@@ -45,6 +48,53 @@ class ConnectToMySQL():
             if name:
                 name = name.strip()
                 query += f' WHERE name LIKE "{name}%"'
+
+            cursor.execute(query)
+            result = cursor.fetchall()
+            cursor.close()
+
+            return result
+
+        except Exception as e:
+            print('Fail to get users from DATABASE')
+            print(e)
+
+        finally:
+            if self.connector:
+                self.connector.close()
+
+    def get_user(self, id: int):
+        try:
+            self.connect()
+            cursor = self.connector.cursor(dictionary=True)
+            query = f'SELECT * FROM {self.database}.{self.user_table}'
+
+            if id:
+                query += f' WHERE user_id = {id}'
+
+            cursor.execute(query)
+            result = cursor.fetchall()
+            cursor.close()
+
+            return result
+
+        except Exception as e:
+            print('Fail to get users from DATABASE')
+            print(e)
+
+        finally:
+            if self.connector:
+                self.connector.close()
+
+    def get_user_by_email(self, email):
+        try:
+            self.connect()
+            cursor = self.connector.cursor(dictionary=True)
+            query = f'''SELECT u.user_id, u.title, u.perm, u.address, 
+                        u.dob, u.name, l.email, l.password
+                        FROM user u
+                        JOIN login l ON u.user_id = l.user_id
+                        WHERE l.email = {email};'''
 
             cursor.execute(query)
             result = cursor.fetchall()
@@ -199,6 +249,89 @@ class ConnectToMySQL():
             if self.connector:
                 self.connector.close()
 
+    def get_login_detail(self, data: dict):
+        try:
+            self.connect()
+            cursor = self.connector.cursor(dictionary=True)
+            email = data['email']
+            password = data['password']
+
+            query = f'SELECT * FROM {self.database}.{self.login_table} WHERE email = "{email}"'
+
+            cursor.execute(query)
+            result = cursor.fetchone()
+            cursor.close()
+
+            if not result: 
+                return {'status': 'fail', 'message': 'Invalid email'}
+            elif not verify_login(password, self.get_password(email)):
+                return {'status': 'fail', 'message': 'Invalid password'}
+            
+            return self.get_user_by_email(email)
+
+        except Exception as e:
+            print('Fail to get login detail')
+            print(e)
+
+        finally:
+            if self.connector:
+                self.connector.close()
+
+    def get_password(self, email):
+        try:
+            self.connect()
+            cursor = self.connector.cursor(dictionary=True)
+            query = f"SELECT password FROM {self.database}.{self.login_table} WHERE email = '{email}'"
+            cursor.execute(query)
+            result = cursor.fetchone()
+            cursor.close()
+            
+            return result
+
+        except Exception as e:
+            print('Fail to get user')
+            print(e)
+            return {'status': 'fail', 'message': 'Fail to get password'}
+
+        finally:
+            if self.connector:
+                self.connector.close()
+
+
+
+    def add_login_user(self, user_id: int, email: str, password: str):
+        try:
+            self.connect()
+            cursor = self.connector.cursor(dictionary=True)
+            # get latest id
+
+            query = f'SELECT MAX(login_id) FROM {self.database}.{self.login_table}'
+            cursor.execute(query)
+            
+            id = list(cursor.fetchone().values())[0]
+            
+            if not id:
+                id = 1
+            else:
+                id += 1
+
+            # add data to database
+            query = f'INSERT INTO {self.database}.{self.login_table} (login_id, user_id, email, password) VALUES (%s, %s, %s, %s)'
+            cursor.execute(query, (id, user_id, email, password))
+            self.connector.commit()
+
+            cursor.close()
+
+            return {'status': 'success', 'message': 'Added user successfully'}
+
+        except Exception as e:
+            print('Fail to create user')
+            print(e)
+            return {'status': 'fail', 'message': 'Fail to add user'}
+
+        finally:
+            if self.connector:
+                self.connector.close()
                 
 
 database = ConnectToMySQL()
@@ -211,11 +344,13 @@ if __name__ == '__main__':
             dob = data['dob']
             address = data['address']
     '''
-    user = {'name':'Testing', 'title':'Testing', 'perm':'member', 'dob':'2023-01-01', 'address':'Testing'}
-    database.add_user(user)
+    # user = {'name':'Testing', 'title':'Testing', 'perm':'member', 'dob':'2023-01-01', 'address':'Testing'}
+    # database.add_user(user)
     # database.update(2, {2, 'Retest', 'Retest', 'member', '2023-02-01', 'Retest'})
     # result = database.get_all_user()
     # print(result)
     # deadline = database.get_deadline('2021-08-01')
     # print(deadline)
+
+    database.add_login_user(100, 'admin', hash_password('admin'))
 
