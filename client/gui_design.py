@@ -160,7 +160,6 @@ class ManageDeadlineScreen(QMainWindow):
         self.deadline_list.itemDoubleClicked.connect(self.updateDeadline)
         self.add_button.clicked.connect(self.addDeadline)
         
-
     def goToHomeScreen(self):
         widget_stack.setCurrentIndex(1)
         widget_stack.removeWidget(widget_stack.widget(2))
@@ -196,15 +195,22 @@ class ManageDeadlineScreen(QMainWindow):
     def updateDeadline(self):
         if self.deadline_list.currentItem():
             # open a new QDialog to update deadline
-            # get data from database
+            # get data from cache
+            id = self.deadline_list.currentItem()
+            name = self.name_field.text().strip()
+            date = self.date_field.text().strip()
+            status = self.status_field.text().strip()
+
             pass 
 
         # update_deadline(id, name, date, status)
         pass 
 
     def deleteDeadline(self):
-        # delete_deadline(id)
-        pass
+        # select current item in the list
+        if self.deadline_list.currentItem():
+            id = self.deadline_list.currentItem()
+            delete_deadline(id)
 
 class ManageMemberScreen(QMainWindow):
     def __init__(self):
@@ -284,7 +290,6 @@ class ManageMemberScreen(QMainWindow):
     def deleteMember(self):
         # delete
         id = int(self.id_field.text().strip())
-        delete_user(id)
 
     def updateMember(self):
         # put
@@ -298,7 +303,6 @@ class ManageMemberScreen(QMainWindow):
     def goToHomeScreen(self):
         widget_stack.setCurrentIndex(1)
         widget_stack.removeWidget(widget_stack.widget(2))
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

@@ -64,7 +64,6 @@ class ConnectToMySQL():
         try:
             self.connect()
             cursor = self.connector.cursor(dictionary=True)
-
             name = data['name']
             title = data['title']
             perm = data['perm']
@@ -105,8 +104,8 @@ class ConnectToMySQL():
         try:
             self.connect()
             cursor = self.connector.cursor()
-            print(id)
-            query = f"DELETE FROM {self.database}.{self.user_table} WHERE user_id = '{id}'"
+
+            query = f"DELETE FROM {self.database}.{self.user_table} WHERE user_id = '{int(id)}'"
             cursor.execute(query)
 
             self.connector.commit()
@@ -175,16 +174,48 @@ class ConnectToMySQL():
             if self.connector:
                 self.connector.close()
 
+    def add_deadline(self, data: dict):
+        pass 
+
+    def delete_deadline(self, id: int):
+        try:
+            self.connect()
+            cursor = self.connector.cursor()
+            
+            query = f"DELETE FROM {self.database}.{self.deadline_table} WHERE task_id = '{int(id)}'"
+
+            cursor.execute(query)
+
+            self.connector.commit()
+            cursor.close()
+            return {'status': 'success', 'message': 'Deleted deadline successfully'}
+        
+        except Exception as e:
+            print('Fail to delete deadline')
+            print(e)
+            return {'status': 'fail', 'message': 'Failed to delete deadline'}
+        
+        finally:
+            if self.connector:
+                self.connector.close()
+
+                
 
 database = ConnectToMySQL()
 
 if __name__ == '__main__':
     '''
-
+            name = data['name']
+            title = data['title']
+            perm = data['perm']
+            dob = data['dob']
+            address = data['address']
     '''
-    # database.add_user('Testing', 'Testing', 'member', '2023-01-01', 'Testing')
+    user = {'name':'Testing', 'title':'Testing', 'perm':'member', 'dob':'2023-01-01', 'address':'Testing'}
+    database.add_user(user)
     # database.update(2, {2, 'Retest', 'Retest', 'member', '2023-02-01', 'Retest'})
     # result = database.get_all_user()
     # print(result)
-    deadline = database.get_deadline('2021-08-01')
-    print(deadline)
+    # deadline = database.get_deadline('2021-08-01')
+    # print(deadline)
+

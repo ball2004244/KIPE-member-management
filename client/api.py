@@ -19,10 +19,11 @@ def get_user(name: str) -> list:
 
 
 def create_user(name: str, title: str, perm: str, dob: str, address: str):
+    params = {'user': True}
     data = {'name': name, 'title': title, 'perm': perm,
             'dob': dob, 'address': address}
 
-    response = requests.post(URL, json=data)
+    response = requests.post(URL, params= params, json=data)
     if response.status_code == 200:
         return response.json()
     else:
@@ -45,8 +46,8 @@ def update_user(id: int, name: str, title: str, perm: str, dob: str, address: st
 
 
 def delete_user(id: int):
-    data = json.dumps(id)
-    response = requests.delete(URL, json=data)
+    data = {'user_id': id}
+    response = requests.delete(URL, params=data)
 
     if response.status_code == 200:
         return response.json()
@@ -97,6 +98,17 @@ def get_deadline(date: datetime.date):
     else:
         return cache_data[str((date.year, date.month))]
 
+def create_deadline(name: str, date: str, status: str):
+    params = {'deadline': True}
+    data = {'name': name, 'date': date, 'status': status}
+
+    response = requests.post(URL, params=params, json=data)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Error: " + str(response.status_code))
+
+
 def update_deadline(id: int, name: str, date: str, status: str):
     data = {'id': id,
             'data':
@@ -111,8 +123,8 @@ def update_deadline(id: int, name: str, date: str, status: str):
         print("Error: " + str(response.status_code))
 
 def delete_deadline(id: int):
-    data = json.dumps(id)
-    response = requests.delete(URL, json=data)
+    data = {'task_id': id}
+    response = requests.delete(URL, params=data)
 
     if response.status_code == 200:
         return response.json()
@@ -130,4 +142,4 @@ if __name__ == '__main__':
     # # print(update_user(data))
     # print(get_user(''))
     # print(delete_user(6))
-    print(get_deadline('2021-08-01'))
+    print(delete_deadline(3))

@@ -3,7 +3,7 @@ from database import database
 import json 
 import urllib.parse as urlparse
 
-class HTTPMethods(BaseHTTPRequestHandler):
+class HTTPHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
@@ -24,18 +24,30 @@ class HTTPMethods(BaseHTTPRequestHandler):
         else:
             result = {'error': 'Please provide valid parameters'}
             
-        self.wfile.write(bytes(json.dumps(result, default=str), 'utf-8'))
+        self.wfile.write(bytes(json.dumps(result), 'UTF-8'))
  
     def do_POST(self):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.end_headers() 
         
-        content_length = int(self.headers['Content-Length'])
-        body = self.rfile.read(content_length)
-        data = json.loads(body.decode())
+        query_params = {}
+        if '?' in self.path:
+            query_params = dict(q.split('=') for q in self.path.split('?')[1].split('&'))
 
-        result = database.add_user(data)
+        if 'user' in query_params:
+            content_length = int(self.headers['Content-Length'])
+            body = self.rfile.read(content_length)
+            data = json.loads(body.decode())
+            result = database.add_user(data)
+        elif 'deadline' in query_params:
+            content_length = int(self.headers['Content-Length'])
+            body = self.rfile.read(content_length)
+            data = json.loads(body.decode())
+            result = database.add_deadline(data)
+        else:
+            result = {'error': 'Please provide valid parameters'}
+        
         self.wfile.write(bytes(json.dumps(result), 'UTF-8'))
 
     def do_DELETE(self):
@@ -43,11 +55,19 @@ class HTTPMethods(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'application/json')
         self.end_headers()
 
-        content_length = int(self.headers['Content-Length'])
-        body = self.rfile.read(content_length)
-        id = json.loads(body.decode())
+        query_params = {}
+        if '?' in self.path:
+            query_params = dict(q.split('=') for q in self.path.split('?')[1].split('&'))
 
-        result = database.delete_user(id)
+        if 'user_id' in query_params:
+            id = query_params['user_id']
+            result = database.delete_user(id)
+        elif 'task_id' in query_params:
+            id = query_params['task_id']
+            result = database.delete_deadline(id)
+        else:
+            result = {'error': 'Please provide valid parameters'}
+
         self.wfile.write(bytes(json.dumps(result), 'utf-8'))
     
     def do_PUT(self):
@@ -65,7 +85,7 @@ class HTTPMethods(BaseHTTPRequestHandler):
 
 if __name__ == '__main__':
     HOST, PORT = 'localhost', 8000
-    server = HTTPServer((HOST, PORT), HTTPMethods)
+    server = HTTPServer((HOST, PORT), HTTPHandler)
     print(f'Starting server on {HOST}:{PORT}')
     try:
         server.serve_forever()
