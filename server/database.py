@@ -91,13 +91,14 @@ class ConnectToMySQL():
             self.connect()
             cursor = self.connector.cursor(dictionary=True)
             query = f'''SELECT u.user_id, u.title, u.perm, u.address, 
-                        u.dob, u.name, l.email, l.password
+                        u.dob, u.name, l.email
                         FROM user u
                         JOIN login l ON u.user_id = l.user_id
-                        WHERE l.email = {email};'''
+                        WHERE l.email = '{email}';'''
 
             cursor.execute(query)
-            result = cursor.fetchall()
+            result = cursor.fetchall()[0]
+
             cursor.close()
 
             return result
@@ -267,8 +268,11 @@ class ConnectToMySQL():
             elif not verify_login(password, self.get_password(email)):
                 return {'status': 'fail', 'message': 'Invalid password'}
             
-            return self.get_user_by_email(email)
-
+            result = self.get_user_by_email(email)
+            result['status'] = 'success'
+            # return {'status': 'success', 'message': 'Login successfully'}
+            return result 
+            
         except Exception as e:
             print('Fail to get login detail')
             print(e)
@@ -283,7 +287,7 @@ class ConnectToMySQL():
             cursor = self.connector.cursor(dictionary=True)
             query = f"SELECT password FROM {self.database}.{self.login_table} WHERE email = '{email}'"
             cursor.execute(query)
-            result = cursor.fetchone()
+            result = cursor.fetchone()['password']
             cursor.close()
             
             return result
@@ -352,5 +356,5 @@ if __name__ == '__main__':
     # deadline = database.get_deadline('2021-08-01')
     # print(deadline)
 
-    database.add_login_user(100, 'admin', hash_password('admin'))
+    database.add_login_user(100, 'test', hash_password('12345678'))
 

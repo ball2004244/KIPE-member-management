@@ -6,7 +6,6 @@ URL = "http://localhost:8000"
 
 '''MANIPULATING USERS'''
 
-
 def get_user(name: str) -> list:
     data = {'name': name}
 

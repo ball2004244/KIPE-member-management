@@ -33,10 +33,9 @@ class LoginScreen(QMainWindow):
         if not (len(email) and len(password)):
             print('You must fill in both fields')
 
-        if login(email, password):
+        if login(email, password)['status'] == 'success':
             global user_data
             user_data = login(email, password)
-            print(user_data)
             self.goToHomeScreen()
         else:
             print('Incorrect Email or Password')
