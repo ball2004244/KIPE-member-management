@@ -197,33 +197,33 @@ class ConnectToMySQL():
             if self.connector:
                 self.connector.close()
 
-    def get_deadline(self, date):
+    def get_deadline(self, deadline: str):
         try:
             self.connect()
             cursor = self.connector.cursor(dictionary=True)
-            date += ' 00:00:00'
-            try:
-                date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
-            except Exception as e:
-                print('Fail to convert date')
-                print(e)
-                date = datetime.strptime(
-                    '1990-2-2 00:00:00', '%Y-%m-%d %H:%M:%S')
+            query = f'SELECT * FROM {self.database}.{self.deadline_table}'
 
-            query = f'SELECT * FROM {self.database}.{self.deadline_table} WHERE YEAR(deadline) = {date.year} AND MONTH(deadline) = {date.month}'
+            if deadline:
+                query += f' WHERE deadline = "{deadline}"'
 
             cursor.execute(query)
             result = cursor.fetchall()
+
+            # modify result so that it can be used in frontend
+            # convert datetime to string
+            result = [dict((k, v.strftime('%Y-%m-%d') if isinstance(v, datetime) else v) for k, v in d.items()) for d in result]
             cursor.close()
+
             return result
 
         except Exception as e:
-            print('Fail to get deadlines from DATABASE')
+            print('Fail to get deadline from DATABASE')
             print(e)
 
         finally:
             if self.connector:
                 self.connector.close()
+
 
     def add_deadline(self, data: dict):
         try:

@@ -157,7 +157,7 @@ class ManageDeadlineScreen(QMainWindow):
         loadUi('GUI/hr_deadline.ui', self)
 
         self.date_selected = datetime.now().date() 
-
+        self.loadDeadline()
         self.setFixedSize(800, 800)
         self.goback_button.clicked.connect(self.goToHomeScreen)
 
@@ -172,7 +172,7 @@ class ManageDeadlineScreen(QMainWindow):
     def loadDeadline(self):
         self.deadline_list.clear()
         self.date_selected = self.calendar.selectedDate().toPyDate()
-        tasks = get_deadline(self.date_selected)
+        tasks = get_deadline(str(self.date_selected))
 
         for task in tasks:
             if task['task_name'] == 'No deadlines found':
@@ -180,7 +180,7 @@ class ManageDeadlineScreen(QMainWindow):
                 self.deadline_list.addItem(item)
                 continue
 
-            if str(self.date_selected) + ' 00:00:00' == str(task['deadline']):
+            if str(self.date_selected) == str(task['deadline']):
                 item = QListWidgetItem(task['task_name'])
                 self.deadline_list.addItem(item)
 
@@ -230,8 +230,12 @@ class AddDeadlineDialog(QDialog):
         name = self.name_field.text().strip()
         deadline = str(self.deadline) 
         description = self.description_field.toPlainText().strip()
-
+        if not name:
+            print('Name cannot be empty')
+            return
+        
         create_deadline(id, name, deadline, description)
+        get_deadline(str(deadline))
         pass
 
 class ManageMemberScreen(QMainWindow):

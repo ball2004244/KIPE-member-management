@@ -1,7 +1,6 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from database import database
 import json 
-import urllib.parse as urlparse
 
 class HTTPHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -17,9 +16,7 @@ class HTTPHandler(BaseHTTPRequestHandler):
             name = query_params['name']
             result = database.get_user(name)
         elif 'date' in query_params:
-            raw_deadline = query_params['date']
-            decoded_deadline = urlparse.unquote(raw_deadline)
-            deadline = decoded_deadline.replace('+', ' ')
+            deadline = query_params['date']
             result = database.get_deadline(deadline)
         else:
             result = {'error': 'Please provide valid parameters'}

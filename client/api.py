@@ -57,46 +57,23 @@ def delete_user(id: int):
 
 '''MANIPULATING DEADLINES'''
 
-def get_deadline(date: datetime.date):
+def get_deadline(date: str):
 
     # check if the current month is already in cache 
     # if not, get the deadlines from the database
     
-    try:
-        with open('cache.json', 'r') as cache:
-            cache_data = json.load(cache)
-    except (FileNotFoundError, json.decoder.JSONDecodeError):
-        cache_data = {}
+    # try:
+    #     with open('cache.json', 'r') as cache:
+    #         cache_data = json.load(cache)
+    # except (FileNotFoundError, json.decoder.JSONDecodeError):
+    #     cache_data = {}
+    data = {'date': date}
+    response = requests.get(URL, params=data)
 
-    if str((date.year, date.month)) not in cache_data:
-        data = {'date': date}
-        response = requests.get(URL, params=data)
-
-        if response.status_code == 200:
-            content = response.content.decode('utf-8')
-            if content:
-                try:
-                    json_data = json.loads(content)
-                except json.decoder.JSONDecodeError as e:
-                    print(f'Error decoding JSON: {e}')
-                    json_data = []
-            else:
-                json_data = []
-
-            if not json_data:
-                cache_data[str((date.year, date.month))] = [{'task_name': 'No deadlines found'}]
-            else:
-                cache_data[str((date.year, date.month))] = json_data
-
-            with open('cache.json', 'w') as cache:
-                json.dump(cache_data, cache)
-
-            return cache_data[str((date.year, date.month))]
-        else:
-            print("Error: " + str(response.status_code))
-
+    if response.status_code == 200:
+        return response.json()
     else:
-        return cache_data[str((date.year, date.month))]
+        print("Error: " + str(response.status_code))
 
 def create_deadline(user_id: int, name: str, deadline: str, description: str, status='Incomplete'):
     params = {'deadline': True}
@@ -153,4 +130,5 @@ if __name__ == '__main__':
     # # print(update_user(data))
     # print(get_user(''))
     # print(delete_user(6))
-    create_deadline(5, 'Test', '2021-02-02', 'Test')
+    # create_deadline(5, 'Test', '2021-02-02', 'Test')
+    print(get_deadline('2021-02-02'))
