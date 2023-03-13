@@ -2,9 +2,6 @@ import mysql.connector
 from datetime import datetime
 from auth import verify_login, hash_password
 
-# Communicate with database
-
-
 class ConnectToMySQL():
     def __init__(self):
         self.host = '127.0.0.1'

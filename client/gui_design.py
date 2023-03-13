@@ -3,7 +3,7 @@ import os
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import QUrl, Qt, QEvent
+from PyQt5.QtCore import QUrl, Qt
 from api import get_user, create_user, update_user, delete_user, get_deadline, create_deadline, update_deadline, delete_deadline, login
 from datetime import datetime
 import functools
@@ -79,7 +79,7 @@ class HomeScreen(QMainWindow):
         self.name.setText(f"{user_data['name']}")
         self.title.setText(f"{user_data['title']}")
         try:
-            # path = database.get_avatar(user_data['id'])['path']
+            # path = get_avatar(user_data['id'])['path']
             path = ''
             if not os.path.isfile(path):
                 raise FileNotFoundError
@@ -133,7 +133,6 @@ class HomeScreen(QMainWindow):
 
     def clickOnDate(self, date):
         print(f'Selected date: {date}')
-        # database.load_deadline(date)
 
         # if date already in stack, means that this click is to exit
         if date in self.stack:
@@ -146,7 +145,7 @@ class HomeScreen(QMainWindow):
 
         # load data to task browser
         '''
-        text = f'{database.task_name} - {database.deadline}\n Status: {database.status}\n' 
+        text = f'{task_name} - {deadline}\n Status: {database.status}\n' 
         self.task_browser.setPlainText(text)
         '''
 
@@ -185,7 +184,7 @@ class ManageDeadlineScreen(QMainWindow):
                 self.deadline_list.addItem(item)
 
         ''' For hr and admin
-        text = f'{database.member_name} - {database.task_name} ({database.task_time})\n'
+        text = f'{member_name} - {task_name} ({task_time})\n'
         self.task_browser.setPlainText(text)
         '''
         pass 
@@ -310,11 +309,9 @@ class ManageMemberScreen(QMainWindow):
         #reformat dob
         dob = datetime.strptime(dob, "%d/%m/%Y").strftime("%Y-%m-%d")
 
-        # send data to database
         create_user(name, title, 'member', dob, address)
 
     def deleteMember(self):
-        # delete
         id = int(self.id_field.text().strip())
         delete_user(id)
 
