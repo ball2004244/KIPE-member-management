@@ -1,3 +1,31 @@
-# KIPE-member-management system
+# KIPE Member Management System
+## Description
+This is the Member Management System developed by @ball2004244, aimed to provide effcient managing program for HR Department at KIPE Vietnam. Our website is hosted at kipevietnam.com, please feel free to check it out.
+
+About this program, it is the client-server system that enable information transfer with low latency (< 20ms) and high security (using complex algorithms and various security methodologies). 
+
+About the server, I may host it using the same domain of KIPE's website. 
+
+About the client, it is a desktop application which gives different permissions to the user based on their accounts. The user can only login through a provided account to gain access to the application, and all the other ways of gaining access without admin's permission would be considered illegal. 
+
+For more detail into the technical aspect, please take a look at the section below.
+
 ## Please read all file in the document directory to get the general idea of this program
- 
+All the documents are located at document folder, including:
+1. client folder:
+- GUI.md: the description for client-side user interface.
+- api.md: contains description for client-side back-end logic.
+
+2. server folder:
+- server.py: contains details about our HTTP server, which used to receive and response to requests from the clients.
+- database.py: contains all information about the process of communicating with MySQL database.
+
+## How to run this program?
+Currently, the system is not yet published on the internet. However, we can still run the program in the development settings. 
+
+To run the system in development mode, please follow these steps:
+1. Enable the virtual environment by addressing the activate file at venv/Scripts/activate
+2. Even though all the dependencies are pre-installed, you can reinstall them in case any error occur. The information about dependencies are mentioned in each documents, and also in the file requirements.txt
+3. Run the file server/server.py using python. The message "Server is running at port 8000" will pop up means that the server is running properly.
+4. Run the file client/gui_design.py using python. A desktop window will pop up if there is no error. 
+5. Play around with the client-side features, and take a look at the console on both client and server-side. 
