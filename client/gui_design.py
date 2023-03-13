@@ -4,7 +4,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QUrl, Qt, QEvent
-from api import get_user, create_user, update_user, delete_user, get_deadline, update_deadline, delete_deadline, login
+from api import get_user, create_user, update_user, delete_user, get_deadline, create_deadline, update_deadline, delete_deadline, login
 from datetime import datetime
 import functools
 
@@ -155,6 +155,9 @@ class ManageDeadlineScreen(QMainWindow):
     def __init__(self):
         super(ManageDeadlineScreen, self).__init__()
         loadUi('GUI/hr_deadline.ui', self)
+
+        self.date_selected = datetime.now().date() 
+
         self.setFixedSize(800, 800)
         self.goback_button.clicked.connect(self.goToHomeScreen)
 
@@ -168,16 +171,16 @@ class ManageDeadlineScreen(QMainWindow):
     
     def loadDeadline(self):
         self.deadline_list.clear()
-        date_selected = self.calendar.selectedDate().toPyDate()
-        tasks = get_deadline(date_selected)
-        # tasks = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5']
+        self.date_selected = self.calendar.selectedDate().toPyDate()
+        tasks = get_deadline(self.date_selected)
+
         for task in tasks:
             if task['task_name'] == 'No deadlines found':
                 item = QListWidgetItem(task['task_name'])
                 self.deadline_list.addItem(item)
                 continue
 
-            if str(date_selected) + ' 00:00:00' == str(task['deadline']):
+            if str(self.date_selected) + ' 00:00:00' == str(task['deadline']):
                 item = QListWidgetItem(task['task_name'])
                 self.deadline_list.addItem(item)
 
@@ -188,19 +191,14 @@ class ManageDeadlineScreen(QMainWindow):
         pass 
 
     def addDeadline(self):
-        name = self.name_field.text().strip()
-        date = self.date_field.text().strip()
-        status = self.status_field.text().strip()
-        # add_deadline(name, date, status)
+        self.goToAddDeadline()
         pass
     
     def updateDeadline(self):
         if self.deadline_list.currentItem():
-            # open a new QDialog to update deadline
-            # get data from cache
             id = self.deadline_list.currentItem()
             name = self.name_field.text().strip()
-            date = self.date_field.text().strip()
+            deadline = self.deadline
             status = self.status_field.text().strip()
 
             pass 
@@ -213,6 +211,28 @@ class ManageDeadlineScreen(QMainWindow):
         if self.deadline_list.currentItem():
             id = self.deadline_list.currentItem()
             delete_deadline(id)
+
+    def goToAddDeadline(self):
+        add_deadline_screen = AddDeadlineDialog(self.date_selected)
+        add_deadline_screen.exec_()
+
+class AddDeadlineDialog(QDialog):
+    def __init__(self, deadline):
+        super(AddDeadlineDialog, self).__init__()
+        loadUi('GUI/add_deadline.ui', self)
+        self.setFixedSize(600, 600)
+        self.deadline = deadline
+        self.date_field.setText(str(self.deadline))
+        self.add_button_2.clicked.connect(self.addDeadline)
+    
+    def addDeadline(self):
+        id = user_data['user_id']
+        name = self.name_field.text().strip()
+        deadline = str(self.deadline) 
+        description = self.description_field.toPlainText().strip()
+
+        create_deadline(id, name, deadline, description)
+        pass
 
 class ManageMemberScreen(QMainWindow):
     def __init__(self):
@@ -292,6 +312,7 @@ class ManageMemberScreen(QMainWindow):
     def deleteMember(self):
         # delete
         id = int(self.id_field.text().strip())
+        delete_user(id)
 
     def updateMember(self):
         # put

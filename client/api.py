@@ -98,9 +98,9 @@ def get_deadline(date: datetime.date):
     else:
         return cache_data[str((date.year, date.month))]
 
-def create_deadline(name: str, date: str, status: str):
+def create_deadline(user_id: int, name: str, deadline: str, description: str, status='Incomplete'):
     params = {'deadline': True}
-    data = {'name': name, 'date': date, 'status': status}
+    data = {'uid': user_id, 'name': name, 'deadline': deadline, 'status': status, 'description': description}
 
     response = requests.post(URL, params=params, json=data)
     if response.status_code == 200:
@@ -153,4 +153,4 @@ if __name__ == '__main__':
     # # print(update_user(data))
     # print(get_user(''))
     # print(delete_user(6))
-    print(delete_deadline(3))
+    create_deadline(5, 'Test', '2021-02-02', 'Test')
