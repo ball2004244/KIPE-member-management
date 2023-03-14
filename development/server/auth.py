@@ -16,3 +16,6 @@ def hash_password(password):
     encoded_password = password.encode('utf-8')
     hashed_password = hashlib.sha256(encoded_password).hexdigest()
     return hashed_password
+
+if __name__ == '__main__':
+    print(hash_password('testmember'))
