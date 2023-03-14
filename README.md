@@ -21,11 +21,19 @@ All the documents are located at document folder, including:
 - database.py: contains all information about the process of communicating with MySQL database.
 
 ## How to run this program?
-Currently, the system is not yet published on the internet. However, we can still run the program in the development settings. 
+Currently, the system can be run in two different ways:
 
+### In development settings
 To run the system in development mode, please follow these steps:
 1. Enable the virtual environment by addressing the activate file at venv/Scripts/activate
 2. Even though all the dependencies are pre-installed, you can reinstall them in case any error occur. The information about dependencies are mentioned in each documents, and also in the file requirements.txt
 3. Run the file server/server.py using python. The message "Server is running at port 8000" will pop up means that the server is running properly.
 4. Run the file client/gui_design.py using python. A desktop window will pop up if there is no error. 
-5. Play around with the client-side features, and take a look at the console on both client and server-side. 
+5. Play around with the client-side features, and take a look at the console on both client and server-side.
+
+### In production settings
+To run the system in production mode, please follow these steps:
+1. Enable the virtual environment by addressing the activate file at venv/Scripts/activate
+2. The server is already hosted at http://kipevietnam.com/hr_server, so you don't need to run the server file. However, you can still check it out in the production folder. 
+3. Run the file production/client/gui_design.py using python. This is a configurated application that connect to the online server.
+
