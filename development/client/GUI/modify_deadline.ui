@@ -27,10 +27,10 @@
 background-color:rgb(102, 84, 94)}
 </string>
    </property>
-   <widget class="QPushButton" name="add_button">
+   <widget class="QPushButton" name="modify_button">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>70</x>
       <y>500</y>
       <width>200</width>
       <height>50</height>
@@ -42,7 +42,7 @@ background-color: rgb(246, 224, 181);
 font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
     </property>
     <property name="text">
-     <string>Add Deadline</string>
+     <string>Save Change</string>
     </property>
    </widget>
    <widget class="QLabel" name="form_name">
@@ -60,7 +60,7 @@ color: rgb(246, 224, 181);
 text-align: right;</string>
     </property>
     <property name="text">
-     <string>ADD NEW DEADLINE</string>
+     <string>MODIFY DEADLINE</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -87,29 +87,11 @@ text-align: right;</string>
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="name_field">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>100</y>
-      <width>350</width>
-      <height>50</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-radius: 20px;
-font-size: 20px;
-color: black;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLabel" name="date_label">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>170</y>
+      <y>240</y>
       <width>140</width>
       <height>30</height>
      </rect>
@@ -130,7 +112,7 @@ text-align: right;</string>
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>310</y>
+      <y>380</y>
       <width>140</width>
       <height>30</height>
      </rect>
@@ -147,27 +129,12 @@ text-align: right;</string>
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QTextEdit" name="description_field">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>320</y>
-      <width>350</width>
-      <height>150</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-radius: 20px;
-font-size: 20px;
-color: black;</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="date_field">
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>170</y>
-      <width>191</width>
+      <y>240</y>
+      <width>171</width>
       <height>30</height>
      </rect>
     </property>
@@ -183,11 +150,113 @@ text-align: right;</string>
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
+   <widget class="QLabel" name="name_field">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>100</y>
+      <width>271</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+    </property>
+    <property name="text">
+     <string>Name</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="description_field">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>380</y>
+      <width>191</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+    </property>
+    <property name="text">
+     <string>Description</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="delete_button">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>500</y>
+      <width>200</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 20px;
+background-color: rgb(246, 224, 181);
+font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Delete Deadline</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="status_label">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>310</y>
+      <width>140</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+    </property>
+    <property name="text">
+     <string>Status:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="status_field">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>310</y>
+      <width>191</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+    </property>
+    <property name="text">
+     <string>Status</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
    <widget class="QLabel" name="assigned_label">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>240</y>
+      <y>170</y>
       <width>151</width>
       <height>30</height>
      </rect>
@@ -204,22 +273,25 @@ text-align: right;</string>
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="name_field_2">
+   <widget class="QLabel" name="assigned_field">
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>230</y>
-      <width>350</width>
-      <height>50</height>
+      <y>170</y>
+      <width>281</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-radius: 20px;
-font-size: 20px;
-color: black;</string>
+     <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
     </property>
     <property name="text">
-     <string/>
+     <string>Member</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
   </widget>
