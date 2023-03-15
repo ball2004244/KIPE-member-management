@@ -120,7 +120,7 @@ border-radius: 20px;
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>E:/Tam/Programming/software/Message_Platform/client/desktop/GUI/Resource/default_avatar.png</normaloff>E:/Tam/Programming/software/Message_Platform/client/desktop/GUI/Resource/default_avatar.png</iconset>
+       <normaloff>../../../../../../../software/Message_Platform/client/desktop/GUI/Resource/default_avatar.png</normaloff>../../../../../../../software/Message_Platform/client/desktop/GUI/Resource/default_avatar.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -132,368 +132,399 @@ border-radius: 20px;
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QWidget" name="modify_form_container" native="true">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>160</y>
-       <width>401</width>
-       <height>301</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="modify_form">
-      <item>
-       <widget class="QLabel" name="form_name">
-        <property name="styleSheet">
-         <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-        </property>
-        <property name="text">
-         <string>MODIFY EXISTING MEMBER</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_7">
-        <item>
-         <widget class="QLabel" name="name_label">
-          <property name="styleSheet">
-           <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-          </property>
-          <property name="text">
-           <string>Name:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="name_field">
-          <property name="styleSheet">
-           <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <widget class="QLabel" name="title">
-          <property name="styleSheet">
-           <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-          </property>
-          <property name="text">
-           <string>Title:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="title_field">
-          <property name="styleSheet">
-           <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <widget class="QLabel" name="id">
-          <property name="styleSheet">
-           <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-          </property>
-          <property name="text">
-           <string>ID:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="id_field">
-          <property name="styleSheet">
-           <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QLabel" name="dob_label">
-          <property name="styleSheet">
-           <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-          </property>
-          <property name="text">
-           <string>Date of Birth: </string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="dob_field">
-          <property name="styleSheet">
-           <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QLabel" name="address_label">
-          <property name="styleSheet">
-           <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-          </property>
-          <property name="text">
-           <string>Address:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="address_field">
-          <property name="styleSheet">
-           <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_9">
-        <item>
-         <widget class="QPushButton" name="modify_button">
-          <property name="styleSheet">
-           <string notr="true">border-radius: 25px;
-background-color: rgb(246, 224, 181);
-font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Modify</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="delete_button">
-          <property name="styleSheet">
-           <string notr="true">border-radius: 25px;
-background-color: rgb(246, 224, 181);
-font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Delete</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="formWidget" native="true">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>480</y>
-       <width>401</width>
-       <height>230</height>
-      </rect>
-     </property>
-     <layout class="QFormLayout" name="add_form">
-      <item row="0" column="0" colspan="2">
-       <widget class="QLabel" name="form_name3">
-        <property name="styleSheet">
-         <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-text-align: right;</string>
-        </property>
-        <property name="text">
-         <string>ADD NEW MEMBER</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="name_label_2">
-        <property name="styleSheet">
-         <string notr="true">font: 75 14pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-</string>
-        </property>
-        <property name="text">
-         <string>Name</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="name_field_2">
-        <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-font-size: 20px;
-color: black;</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="title_label_2">
-        <property name="styleSheet">
-         <string notr="true">font: 75 14pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-</string>
-        </property>
-        <property name="text">
-         <string>Title</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="title_field_2">
-        <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-font-size: 20px;
-color: black;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="dob_label_2">
-        <property name="styleSheet">
-         <string notr="true">font: 75 14pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-</string>
-        </property>
-        <property name="text">
-         <string>Date of Birth</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="dob_field_2">
-        <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-font-size: 20px;
-color: black;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="address_label_2">
-        <property name="styleSheet">
-         <string notr="true">font: 75 14pt &quot;MS Shell Dlg 2&quot;; 
-color: rgb(246, 224, 181);
-</string>
-        </property>
-        <property name="text">
-         <string>Address</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="address_field_2">
-        <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-font-size: 20px;
-color: black;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QPushButton" name="submit_button">
-        <property name="styleSheet">
-         <string notr="true">border-radius: 25px;
-background-color: rgb(246, 224, 181);
-font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Submit</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
     <widget class="Line" name="line">
      <property name="geometry">
       <rect>
        <x>340</x>
        <y>160</y>
        <width>16</width>
-       <height>541</height>
+       <height>550</height>
       </rect>
      </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="name_label">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>200</y>
+       <width>180</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>Name:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="title">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>240</y>
+       <width>180</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>Title:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="id">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>280</y>
+       <width>40</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>ID:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="dob_label">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>320</y>
+       <width>180</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>Date of Birth: </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="address_label">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>360</y>
+       <width>180</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>Address:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="modify_button">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>410</y>
+       <width>150</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 20px;
+background-color: rgb(246, 224, 181);
+font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Modify</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="delete_button">
+     <property name="geometry">
+      <rect>
+       <x>590</x>
+       <y>410</y>
+       <width>150</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 20px;
+background-color: rgb(246, 224, 181);
+font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Delete</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="form_name">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>160</y>
+       <width>380</width>
+       <height>35</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>MODIFY EXISTING MEMBER</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="Line" name="line_2">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>460</y>
+       <width>400</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="form_name3">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>475</y>
+       <width>380</width>
+       <height>35</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>ADD NEW MEMBER</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="name_field">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>515</y>
+       <width>250</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 15px;
+font-size: 20px;
+color: black;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="title_field">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>555</y>
+       <width>250</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 15px;
+font-size: 20px;
+color: black;</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="dob_field">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>595</y>
+       <width>250</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 15px;
+font-size: 20px;
+color: black;</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="address_field">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>635</y>
+       <width>250</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 15px;
+font-size: 20px;
+color: black;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="submit_button">
+     <property name="geometry">
+      <rect>
+       <x>495</x>
+       <y>680</y>
+       <width>150</width>
+       <height>40</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-radius: 20px;
+background-color: rgb(246, 224, 181);
+font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Submit</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="name_label_2">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>510</y>
+       <width>80</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>Name:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="title_label_2">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>550</y>
+       <width>70</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>Title:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="dob_label_2">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>590</y>
+       <width>160</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>Date of Birth: </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="address_label_2">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>630</y>
+       <width>100</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string>Address:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="modify_id_field">
+     <property name="geometry">
+      <rect>
+       <x>530</x>
+       <y>280</y>
+       <width>180</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 20pt &quot;MS Shell Dlg 2&quot;; 
+color: rgb(246, 224, 181);
+text-align: right;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
     </widget>
    </widget>

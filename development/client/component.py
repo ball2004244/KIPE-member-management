@@ -21,7 +21,7 @@ class EditableLabel(QFrame):
         self.line_edit = QLineEdit(self)
         self.line_edit.hide()
         self.line_edit.setStyleSheet('''
-            border-radius: 20px;
+            border-radius: 15px;
             font-size: 20px;
             color: black;
         ''')
@@ -73,7 +73,7 @@ class EditableBrowser(QFrame):
         # Create a text edit widget for editing the label text
         self.text_edit = QTextEdit(self)
         self.text_edit.setStyleSheet('''
-            border-radius: 20px;
+            border-radius: 15px;
             font-size: 20px;
             color: black;
         ''')

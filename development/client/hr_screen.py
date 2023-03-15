@@ -93,7 +93,7 @@ class ModifyDeadlineDialog(QDialog):
         self.data = data
 
         self.name_field = EditableLabel(str(self.data.get('task_name', '')), 200, 90, 350, 40, self)
-        self.id_field = EditableLabel(str(self.data.get('user_id', '')), 200, 160, 350, 40, self)
+        self.modify_id_field = EditableLabel(str(self.data.get('user_id', '')), 200, 160, 350, 40, self)
         self.deadline_field = EditableLabel(str(self.data.get('deadline', '')), 200, 230, 350, 40, self)
         self.status_field = EditableLabel(str(self.data.get('status', '')), 200, 300, 350, 40, self)
         self.description_field = EditableBrowser(str(self.data.get('description', '')), 200, 370, 350, 120, self)
@@ -106,7 +106,7 @@ class ModifyDeadlineDialog(QDialog):
     def updateDeadline(self):
         try:
             task_id = int(self.data['task_id'])
-            uid = int(self.id_field.label.text().strip())
+            uid = int(self.modify_id_field.label.text().strip())
             name = self.name_field.label.text().strip()
             deadline = self.deadline_field.label.text().strip()
             status = self.status_field.label.text().strip()
@@ -137,10 +137,17 @@ class ManageMemberScreen(QMainWindow):
         self.main_window = main_window
 
         self.setFixedSize(800, 800)
+
+        self.modify_name_field = EditableLabel('', 530, 200, 250, 40, self)
+        self.modify_title_field = EditableLabel('', 530, 240, 250, 40, self)
+        self.modify_dob_field = EditableLabel('', 530, 320, 250, 40, self)
+        self.modify_address_field = EditableLabel('', 530, 360, 250, 40, self)
+        
         self.name_list_container.setMaximumSize(300, 550)
         self.goback_button.clicked.connect(self.goToHomeScreen)
         self.search.returnPressed.connect(self.searchMember)
-        self.address_field_2.returnPressed.connect(self.addMember)
+
+        self.address_field.returnPressed.connect(self.addMember)
         self.submit_button.clicked.connect(self.addMember)
         self.delete_button.clicked.connect(self.deleteMember)
         self.modify_button.clicked.connect(self.updateMember)
@@ -177,45 +184,46 @@ class ManageMemberScreen(QMainWindow):
             self.name_list.addWidget(label)
 
     def parseMemberToModifyForm(self, item):
-        # Modify dob format
-        dob_str = datetime.strptime(
-            item['dob'], '%Y-%m-%d').strftime('%d/%m/%Y')
 
         # set texts of Mofidy Form
-        self.name_field.setText(item['name'])
-        self.title_field.setText(item['title'])
-        self.id_field.setText(str(item['user_id']))
-        self.dob_field.setText(dob_str)
-        self.address_field.setText(item['address'])
+        self.modify_name_field.label.setText(item['name'])
+        self.modify_title_field.label.setText(item['title'])
+        self.modify_id_field.setText(str(item['user_id']))
+        self.modify_dob_field.label.setText(item['dob'])
+        self.modify_address_field.label.setText(item['address'])
 
     def searchMember(self):
         name = self.search.text().strip()
         data = get_user(name)
 
         self.setUpMemberList(data)
+        self.search.setText('')
 
     def addMember(self):
-        name = self.name_field_2.text().strip()
-        title = self.title_field_2.text().strip()
-        dob = self.dob_field_2.text().strip()
-        address = self.address_field_2.text().strip()
-
-        #reformat dob
-        dob = datetime.strptime(dob, "%d/%m/%Y").strftime("%Y-%m-%d")
+        name = self.name_field.text().strip()
+        title = self.title_field.text().strip()
+        dob = self.dob_field.text().strip()
+        address = self.address_field.text().strip()
 
         create_user(name, title, 'member', dob, address)
 
+        # clear all fields
+        self.name_field.setText('')
+        self.title_field.setText('')
+        self.dob_field.setText('')
+        self.address_field.setText('')
+        
     def deleteMember(self):
-        id = int(self.id_field.text().strip())
+        id = int(self.modify_id_field.text().strip())
         delete_user(id)
 
     def updateMember(self):
-        # put
-        id = self.id_field.text().strip()
-        name = self.name_field_2.text().strip()
-        title = self.title_field_2.text().strip()
-        dob = self.dob_field_2.text().strip()
-        address = self.address_field_2.text().strip()
+        id = self.modify_id_field.text().strip()
+        name = self.modify_name_field.label.text().strip()
+        title = self.modify_title_field.label.text().strip()
+        dob = self.modify_dob_field.label.text().strip()
+        address = self.modify_address_field.label.text().strip()
+
         update_user(id, name, title, 'member', dob, address)
 
     def goToHomeScreen(self):

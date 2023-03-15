@@ -133,8 +133,9 @@ if __name__ == '__main__':
     #         }
     # # create_user(data)
     # # print(update_user(data))
-    # print(get_user(''))
+    print(get_user('Retest'))
     # print(delete_user(6))
     # create_deadline(5, 'Test', '2021-02-02', 'Test')
     # print(get_deadline('2021-02-02'))
-    print(update_deadline(4, 5, 'Test', '2021-02-02', 'Complete', 'Test'))
+    # print(update_deadline(4, 5, 'Test', '2021-02-02', 'Complete', 'Test'))
+

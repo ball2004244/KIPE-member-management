@@ -94,11 +94,11 @@ class HomeScreen(QMainWindow):
 
     def setUpResource(self):
         self.trello.clicked.connect(
-            lambda: self.openLink('https://www.example.com'))
+            lambda: self.openLink('https://trello.com/'))
         self.drive.clicked.connect(
-            lambda: self.openLink('https://www.example.com'))
+            lambda: self.openLink('https://drive.google.com/drive/my-drive'))
         self.facebook.clicked.connect(
-            lambda: self.openLink('https://www.example.com'))
+            lambda: self.openLink('https://www.facebook.com/KIPEVN'))
 
     def openLink(self, url):
         url = QUrl(url)

@@ -53,4 +53,5 @@ What may come up in the next version:
 
 Version 1.0.1: 03/21/2023 (estimated)
 - Finished edit/delete deadlines
-- Working on update member information
+- Finished update member information
+- Working on hyperlink

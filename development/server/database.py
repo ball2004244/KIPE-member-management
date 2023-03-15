@@ -44,7 +44,7 @@ class ConnectToMySQL():
 
             if name:
                 name = name.strip()
-                query += f' WHERE name LIKE "{name}%"'
+                query += f' WHERE name = "{name}"'
 
             cursor.execute(query)
             result = cursor.fetchall()
@@ -60,7 +60,7 @@ class ConnectToMySQL():
             if self.connector:
                 self.connector.close()
 
-    def get_user(self, id: int):
+    def get_user_by_id(self, id: int):
         try:
             self.connect()
             cursor = self.connector.cursor(dictionary=True)
