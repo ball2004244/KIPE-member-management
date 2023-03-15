@@ -52,3 +52,5 @@ What may come up in the next version:
 - The hyperlink will function properly.
 
 Version 1.0.1: 03/21/2023 (estimated)
+- Finish on the front-end of edit/delete deadline
+- Working on the logic of edit/delete deadline

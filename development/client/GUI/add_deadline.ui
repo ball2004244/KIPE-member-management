@@ -204,7 +204,7 @@ text-align: right;</string>
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="name_field_2">
+   <widget class="QLineEdit" name="assigned_field">
     <property name="geometry">
      <rect>
       <x>200</x>

@@ -47,6 +47,12 @@ The managing deadlines screen is implemented using the ManageDeadlineScreen clas
 - List of deadlines for the selected date
 - Error handling for missing or invalid input
 
+### AddDeadline Dialog
+This is the pop-up dialog that appears when hr clicks the `Add Deadline` button. It allows hr to create a new deadline by typing in the task name, member's id, and description.
+
+### ModifyDeadline Dialog
+This is the pop-up dialog that appears when hr clicks any of the task appears under the calendar. It allows hr to modify the deadline information, as well as delete deadline.
+
 ## Managing Members Screen
 The managing members screen is implemented using the ManageMemberScreen class and allows HR and admin users to create, update, and delete member information. It is linked to the HR Home Screen. The screen includes the following features:
 

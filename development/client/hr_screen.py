@@ -2,8 +2,9 @@ from PyQt5.QtWidgets import QMainWindow, QDialog, QListWidgetItem, QPushButton, 
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
-from api import get_user, create_user, update_user, delete_user, get_deadline, create_deadline, update_deadline, delete_deadline, login
 from datetime import datetime
+from api import get_user, create_user, update_user, delete_user, get_deadline, create_deadline, update_deadline, delete_deadline, login
+from component import EditableLabel
 import functools
 
 class ManageDeadlineScreen(QMainWindow):
@@ -65,16 +66,22 @@ class AddDeadlineDialog(QDialog):
         self.add_button.clicked.connect(self.addDeadline)
     
     def addDeadline(self):
-        id = self.assigned_field.text().strip()
-        name = self.name_field.text().strip()
-        deadline = str(self.deadline) 
-        description = self.description_field.toPlainText().strip()
-        if not name:
-            print('Name cannot be empty')
-            return
+        try:
+            id = self.assigned_field.text().strip()
+            name = self.name_field.text().strip()
+            deadline = str(self.deadline) 
+            description = self.description_field.toPlainText().strip()
+            if not name:
+                print('Name cannot be empty')
+                return
+            
+            create_deadline(id, name, deadline, description)
+            get_deadline(str(deadline))
+            print('Successfully add deadline')
+        except Exception as e:
+            print('Cannot add deadline')
+            print(e)
         
-        create_deadline(id, name, deadline, description)
-        get_deadline(str(deadline))
         pass
 
 class ModifyDeadlineDialog(QDialog):
@@ -84,16 +91,24 @@ class ModifyDeadlineDialog(QDialog):
         self.setFixedSize(600, 600)
 
         self.data = data
+
+        self.name_field = EditableLabel(str(self.data['task_name']), 200, 100, 280, 40, self)
+        self.id_field = EditableLabel(str(self.data['user_id']), 200, 170, 280, 40, self)
+        self.deadline_field = EditableLabel(str(self.data['deadline']), 200, 240, 280, 40, self)
+        self.status_field = EditableLabel(str(self.data['status']), 200, 310, 280, 40, self)
+        self.description_field = EditableLabel(str(self.data['description']), 380, 200, 280, 40, self)
+
+        self.modify_button.setFocusPolicy(Qt.NoFocus)
+        self.delete_button.setFocusPolicy(Qt.NoFocus)
         self.modify_button.clicked.connect(self.updateDeadline)
         self.delete_button.clicked.connect(self.deleteDeadline)
-    
     def updateDeadline(self):
         try:
-            id = self.data['task_id']
-            name = self.data['task_name']
-            deadline = self.data['deadline']
-            status = self.data['status']
-    
+            id = int(self.id_field.text().strip())
+            name = self.name_field.text().strip()
+            deadline = self.deadline_field.text().strip()
+            status = self.status_field.text().strip()
+
             update_deadline(id, name, deadline, status)
             print('Successfully update deadline')
         
