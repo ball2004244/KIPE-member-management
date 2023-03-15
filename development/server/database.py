@@ -174,11 +174,20 @@ class ConnectToMySQL():
             self.connect()
             cursor = self.connector.cursor()
             id = new_data['id']
-            data = new_data['data']
-            set_values = ', '.join(
-                [f"{key} = '{val}'" for key, val in data.items()])
+            name = new_data['name']
+            title = new_data['title']
+            perm = new_data['perm']
+            dob = new_data['dob']
+            address = new_data['address']
 
-            query = f"UPDATE {self.database}.{self.user_table} SET {set_values} WHERE user_id = {id}"
+            query = f'''UPDATE {self.database}.{self.user_table}
+                        SET name = "{name}",
+                            title = "{title}",
+                            perm = "{perm}",
+                            dob = "{dob}",
+                            address = "{address}"
+                        WHERE user_id = {id}'''
+            
             cursor.execute(query)
 
             self.connector.commit()
@@ -280,6 +289,40 @@ class ConnectToMySQL():
             print('Fail to delete deadline')
             print(e)
             return {'status': 'fail', 'message': 'Failed to delete deadline'}
+
+        finally:
+            if self.connector:
+                self.connector.close()
+
+    def update_deadline(self, new_data: dict):
+        try:
+            self.connect()
+            cursor = self.connector.cursor()
+            task_id = new_data['task_id']
+            user_id = new_data['uid']
+            name = new_data['name']
+            deadline = new_data['deadline']
+            status = new_data['status']
+            description = new_data['description']
+
+            query = f'''UPDATE {self.database}.{self.deadline_table}
+                        SET task_name = "{name}",
+                            user_id = "{user_id}",
+                            deadline = "{deadline}",
+                            status = "{status}",
+                            description = "{description}"
+                        WHERE task_id = {task_id}'''
+            
+            cursor.execute(query)
+
+            self.connector.commit()
+            cursor.close()
+            return {'status': 'success', 'message': 'Deadline updated successfully'}
+
+        except Exception as e:
+            print('Fail to update deadline')
+            print(e)
+            return {'status': 'fail', 'message': 'Fail to update deadline'}
 
         finally:
             if self.connector:

@@ -4,7 +4,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
 from datetime import datetime
 from api import get_user, create_user, update_user, delete_user, get_deadline, create_deadline, update_deadline, delete_deadline, login
-from component import EditableLabel
+from component import EditableLabel, EditableBrowser
 import functools
 
 class ManageDeadlineScreen(QMainWindow):
@@ -92,24 +92,26 @@ class ModifyDeadlineDialog(QDialog):
 
         self.data = data
 
-        self.name_field = EditableLabel(str(self.data['task_name']), 200, 100, 280, 40, self)
-        self.id_field = EditableLabel(str(self.data['user_id']), 200, 170, 280, 40, self)
-        self.deadline_field = EditableLabel(str(self.data['deadline']), 200, 240, 280, 40, self)
-        self.status_field = EditableLabel(str(self.data['status']), 200, 310, 280, 40, self)
-        self.description_field = EditableLabel(str(self.data['description']), 380, 200, 280, 40, self)
+        self.name_field = EditableLabel(str(self.data.get('task_name', '')), 200, 90, 350, 40, self)
+        self.id_field = EditableLabel(str(self.data.get('user_id', '')), 200, 160, 350, 40, self)
+        self.deadline_field = EditableLabel(str(self.data.get('deadline', '')), 200, 230, 350, 40, self)
+        self.status_field = EditableLabel(str(self.data.get('status', '')), 200, 300, 350, 40, self)
+        self.description_field = EditableBrowser(str(self.data.get('description', '')), 200, 370, 350, 120, self)
 
         self.modify_button.setFocusPolicy(Qt.NoFocus)
         self.delete_button.setFocusPolicy(Qt.NoFocus)
         self.modify_button.clicked.connect(self.updateDeadline)
         self.delete_button.clicked.connect(self.deleteDeadline)
+
     def updateDeadline(self):
         try:
-            id = int(self.id_field.text().strip())
-            name = self.name_field.text().strip()
-            deadline = self.deadline_field.text().strip()
-            status = self.status_field.text().strip()
-
-            update_deadline(id, name, deadline, status)
+            task_id = int(self.data['task_id'])
+            uid = int(self.id_field.label.text().strip())
+            name = self.name_field.label.text().strip()
+            deadline = self.deadline_field.label.text().strip()
+            status = self.status_field.label.text().strip()
+            description = self.description_field.browser.toPlainText().strip()
+            update_deadline(task_id, uid, name, deadline, status, description)
             print('Successfully update deadline')
         
         except Exception as e:

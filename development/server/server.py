@@ -70,19 +70,31 @@ class HTTPHandler(BaseHTTPRequestHandler):
         else:
             result = {'error': 'Please provide valid parameters'}
 
-        self.wfile.write(bytes(json.dumps(result), 'utf-8'))
+        self.wfile.write(bytes(json.dumps(result), 'UTF-8'))
     
     def do_PUT(self):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
 
-        content_length = int(self.headers['Content-Length'])
-        body = self.rfile.read(content_length)
-        data = json.loads(body.decode())
+        query_params = {}
+        if '?' in self.path:
+            query_params = dict(q.split('=') for q in self.path.split('?')[1].split('&'))
 
-        result = database.update_user(data)
-        self.wfile.write(bytes(json.dumps(result), 'utf-8'))
+        if 'task' in query_params:
+            content_length = int(self.headers['Content-Length'])
+            body = self.rfile.read(content_length)
+            data = json.loads(body.decode())
+            result = database.update_deadline(data)
+        elif 'user' in query_params:
+            content_length = int(self.headers['Content-Length'])
+            body = self.rfile.read(content_length)
+            data = json.loads(body.decode())
+            result = database.update_user(data)
+        else:
+            result = {'error': 'Please provide valid parameters'}
+
+        self.wfile.write(bytes(json.dumps(result), 'UTF-8'))
 
 
 if __name__ == '__main__':
