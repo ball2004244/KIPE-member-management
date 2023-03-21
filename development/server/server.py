@@ -16,8 +16,13 @@ class HTTPHandler(BaseHTTPRequestHandler):
             name = query_params['name']
             result = database.get_user(name)
         elif 'date' in query_params:
-            deadline = query_params['date']
-            result = database.get_deadline(deadline)
+            if 'uid' in query_params:
+                uid = query_params['uid']
+                deadline = query_params['date']
+                result = database.get_deadline_for_user(uid, deadline)
+            else:
+                deadline = query_params['date']
+                result = database.get_deadline(deadline)
         else:
             result = {'error': 'Please provide valid parameters'}
             

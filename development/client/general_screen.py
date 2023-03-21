@@ -4,7 +4,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QUrl
-from api import login
+from api import login, get_deadline_for_user
 
 
 class LoginScreen(QMainWindow):
@@ -136,11 +136,30 @@ class HomeScreen(QMainWindow):
             self.stack.append(date)
             self.task_browser.setVisible(True)
 
-        # load data to task browser
-        '''
-        text = f'{task_name} - {deadline}\n Status: {database.status}\n' 
-        self.task_browser.setPlainText(text)
-        '''
+        # convert date to mysql format
+        deadline = date.toString('yyyy-MM-dd')
+
+        # get task from database
+        task_list = get_deadline_for_user(self.user_data['user_id'], deadline)
+        print(task_list)
+
+        # load data to task browser using this format
+        # task_name - deadline
+        # Status: status
+
+        if not task_list:
+            self.task_browser.setPlainText('No task available')
+        
+        else:
+            task_content = ''
+            num = 0
+            for task in task_list:
+                num += 1
+                text = f'{task["task_name"]} - {deadline}\n Status: {task["status"]}\n'
+                task_content += str(num) + '. ' + text
+            
+            self.task_browser.setPlainText(task_content)
+
 
 
 if __name__ == '__main__':

@@ -1,6 +1,4 @@
 import requests
-import json
-from datetime import datetime
 from hashing import hash_password
 URL = "http://localhost:8000"
 
@@ -75,6 +73,14 @@ def get_deadline(date: str):
     else:
         print("Error: " + str(response.status_code))
 
+def get_deadline_for_user(user_id: int, date: str):
+    data = {'date': date, 'uid': user_id}
+    response = requests.get(URL, params=data)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Error: " + str(response.status_code))
 
 def create_deadline(user_id: int, name: str, deadline: str, description: str, status='Incomplete'):
     params = {'deadline': True}

@@ -230,6 +230,31 @@ class ConnectToMySQL():
             if self.connector:
                 self.connector.close()
 
+    def get_deadline_for_user(self, uid: int, deadline: str):
+        try: 
+            self.connect()
+            cursor = self.connector.cursor(dictionary=True)
+            query = f'SELECT * FROM {self.database}.{self.deadline_table} WHERE user_id = {uid}'
+
+            if deadline:
+                query += f' AND deadline = "{deadline}"'
+
+            cursor.execute(query)
+            result = cursor.fetchall()
+
+            # modify result so that it can be used in frontend
+            # convert datetime to string
+            result = [dict((k, v.strftime('%Y-%m-%d') if isinstance(v, datetime) else v) for k, v in d.items()) for d in result]
+            cursor.close()
+
+            return result
+        except Exception as e:
+            print('Fail to get deadline from DATABASE')
+            print(e)
+
+        finally:
+            if self.connector:
+                self.connector.close()
 
     def add_deadline(self, data: dict):
         try:
@@ -432,4 +457,5 @@ if __name__ == '__main__':
     # deadline = database.get_deadline('2021-08-01')
     # print(deadline)
 
-    database.add_login_user(100, 'test', hash_password('12345678'))
+    # database.add_login_user(100, 'test', hash_password('12345678'))
+    database.add_login_user(110, 'testmem', hash_password('12345678'))

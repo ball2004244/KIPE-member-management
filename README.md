@@ -54,4 +54,5 @@ What may come up in the next version:
 Version 1.0.1: 03/21/2023 (estimated)
 - Finished edit/delete deadlines
 - Finished update member information
-- Working on hyperlink
+- Hyperlink navigates to right page
+- Member can see real deadlines from the server
