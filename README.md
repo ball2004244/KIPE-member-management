@@ -56,3 +56,4 @@ Version 1.0.1: 03/21/2023 (estimated)
 - Finished update member information
 - Hyperlink navigates to right page
 - Member can see real deadlines from the server
+- Working on Avatar and Title

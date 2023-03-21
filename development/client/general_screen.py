@@ -91,6 +91,7 @@ class HomeScreen(QMainWindow):
         avatar = QIcon(pixmap)
 
         self.avatar.setIcon(avatar)
+        self.avatar.clicked.connect(self.goToChangeAvatar)
 
     def setUpResource(self):
         self.trello.clicked.connect(
@@ -160,6 +161,37 @@ class HomeScreen(QMainWindow):
             
             self.task_browser.setPlainText(task_content)
 
+    def goToChangeAvatar(self):
+        change_avatar_dialog = ChangeAvatarDialog()
+        change_avatar_dialog.exec_()
+
+class ChangeAvatarDialog(QDialog):
+    def __init__(self):
+        super(ChangeAvatarDialog, self).__init__()
+        loadUi('GUI/upload_avatar.ui', self)
+
+        self.setFixedSize(600, 600)
+
+        # set current avatar to default
+        self.current_avatar = './Resource/default_avatar.png'
+
+        pixmap = QPixmap(self.current_avatar)
+        avatar = QIcon(pixmap)
+
+        self.avatar.setIcon(avatar)
+        self.avatar.clicked.connect(self.uploadAvatar)
+
+    def uploadAvatar(self):
+        file_name, _ = QFileDialog.getOpenFileName(
+            self, 'Open File', '', 'Image Files (*.png *.jpg *.jpeg)')
+
+        if file_name:
+            self.current_avatar = file_name
+
+            pixmap = QPixmap(self.current_avatar)
+            avatar = QIcon(pixmap)
+
+            self.avatar.setIcon(avatar)
 
 
 if __name__ == '__main__':
