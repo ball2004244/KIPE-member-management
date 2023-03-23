@@ -1,10 +1,11 @@
 import sys
 import os
+from functools import partial
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QUrl
-from api import login, get_deadline_for_user
+from api import login, get_deadline_for_user, upload_avatar
 
 
 class LoginScreen(QMainWindow):
@@ -91,7 +92,9 @@ class HomeScreen(QMainWindow):
         avatar = QIcon(pixmap)
 
         self.avatar.setIcon(avatar)
-        self.avatar.clicked.connect(self.goToChangeAvatar)
+        # also send user_id to goToChangeAvatar use functools
+        self.avatar.clicked.connect(partial(self.goToChangeAvatar, self.user_data['user_id']))
+
 
     def setUpResource(self):
         self.trello.clicked.connect(
@@ -161,21 +164,23 @@ class HomeScreen(QMainWindow):
             
             self.task_browser.setPlainText(task_content)
 
-    def goToChangeAvatar(self):
-        change_avatar_dialog = ChangeAvatarDialog()
+    def goToChangeAvatar(self, user_id):
+        change_avatar_dialog = ChangeAvatarDialog(user_id)
         change_avatar_dialog.exec_()
 
 class ChangeAvatarDialog(QDialog):
-    def __init__(self):
+    def __init__(self, user_id):
         super(ChangeAvatarDialog, self).__init__()
         loadUi('GUI/upload_avatar.ui', self)
+
+        self.user_id = user_id
 
         self.setFixedSize(600, 600)
 
         # set current avatar to default
-        self.current_avatar = './Resource/default_avatar.png'
+        self.avatar_path = './Resource/default_avatar.png'
 
-        pixmap = QPixmap(self.current_avatar)
+        pixmap = QPixmap(self.avatar_path)
         avatar = QIcon(pixmap)
 
         self.avatar.setIcon(avatar)
@@ -186,13 +191,15 @@ class ChangeAvatarDialog(QDialog):
             self, 'Open File', '', 'Image Files (*.png *.jpg *.jpeg)')
 
         if file_name:
-            self.current_avatar = file_name
+            # set current avatar to the selected file
+            self.avatar_path = file_name
 
-            pixmap = QPixmap(self.current_avatar)
+            pixmap = QPixmap(self.avatar_path)
             avatar = QIcon(pixmap)
 
             self.avatar.setIcon(avatar)
 
+            upload_avatar(self.user_id, self.avatar_path)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

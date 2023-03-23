@@ -4,7 +4,6 @@ URL = "http://localhost:8000"
 
 '''MANIPULATING USERS'''
 
-
 def get_user(name: str) -> list:
     data = {'name': name}
 
@@ -94,9 +93,9 @@ def create_deadline(user_id: int, name: str, deadline: str, description: str, st
         print("Error: " + str(response.status_code))
 
 
-def update_deadline(task_id: int, uid: int, name: str, deadline: str, status: str, description: str):
+def update_deadline(task_id: int, user_id: int, name: str, deadline: str, status: str, description: str):
     params = {'task': True}
-    data = {'task_id': task_id, 'uid': uid, 'name': name, 'deadline': deadline,
+    data = {'task_id': task_id, 'uid': user_id, 'name': name, 'deadline': deadline,
             'status': status, 'description': description}
 
     response = requests.put(URL, params=params, json=data)
@@ -130,6 +129,27 @@ def login(email: str, password: str):
     else:
         print("Error: " + str(response.status_code))
 
+'''UPLOAD IMAGE'''
+def upload_avatar(user_id: int, avatar_path: str):
+    params = {'avatar': True}
+
+    # send the image to the server
+    headers = {'Content-Type': 'multipart/form-data'}
+
+    # read the binary data from the file object
+    with open(avatar_path, 'rb') as file:
+        data = file.read()
+
+    # encode the data as a multipart form-data request
+    files = {'avatar': (f'{user_id}.jpg', data, 'image/jpeg')}
+
+    # send the request
+    response = requests.post(URL, headers=headers, files=files)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Error: " + str(response.status_code))
 
 if __name__ == '__main__':
     # data = {'id': 6,
@@ -139,9 +159,9 @@ if __name__ == '__main__':
     #         }
     # # create_user(data)
     # # print(update_user(data))
-    print(get_user('Retest'))
+    # print(get_user('Retest'))
     # print(delete_user(6))
     # create_deadline(5, 'Test', '2021-02-02', 'Test')
     # print(get_deadline('2021-02-02'))
     # print(update_deadline(4, 5, 'Test', '2021-02-02', 'Complete', 'Test'))
-
+    print(upload_avatar(5, r'C:\Users\nguye\Downloads\kipe_logo.jpg'))

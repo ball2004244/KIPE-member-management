@@ -1,5 +1,5 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from database import database
+from database import database, upload_avatar
 import json 
 
 class HTTPHandler(BaseHTTPRequestHandler):
@@ -37,7 +37,18 @@ class HTTPHandler(BaseHTTPRequestHandler):
         if '?' in self.path:
             query_params = dict(q.split('=') for q in self.path.split('?')[1].split('&'))
 
-        if 'user' in query_params:
+        if 'avatar' in query_params:
+            content_length = int(self.headers['Content-Length'])
+            content_type = self.headers['Content-Type']
+        if content_type == 'image/png' or content_type == 'image/jpeg':
+            file_data = self.rfile.read(content_length)
+            filename = 'image.jpg' if content_type == 'image/jpeg' else 'image.png'
+            
+            with open(filename, 'wb') as f:
+                f.write(file_data)
+            result = upload_avatar(filename)
+
+        elif 'user' in query_params:
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
             data = json.loads(body.decode())
