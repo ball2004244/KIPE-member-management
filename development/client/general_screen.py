@@ -5,7 +5,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QUrl
-from api import login, get_deadline_for_user, upload_avatar
+from api import login, get_deadline_for_user, upload_avatar, get_avatar
 
 
 class LoginScreen(QMainWindow):
@@ -78,8 +78,7 @@ class HomeScreen(QMainWindow):
         self.name.setText(f"{self.user_data['name']}")
         self.title.setText(f"{self.user_data['title']}")
         try:
-            # path = get_avatar(user_data['id'])['path']
-            path = ''
+            path = get_avatar(self.user_data['user_id'])
             if not os.path.isfile(path):
                 raise FileNotFoundError
 
@@ -167,6 +166,7 @@ class HomeScreen(QMainWindow):
     def goToChangeAvatar(self, user_id):
         change_avatar_dialog = ChangeAvatarDialog(user_id)
         change_avatar_dialog.exec_()
+        self.setUpAvatar()
 
 class ChangeAvatarDialog(QDialog):
     def __init__(self, user_id):
@@ -199,7 +199,8 @@ class ChangeAvatarDialog(QDialog):
 
             self.avatar.setIcon(avatar)
 
-            upload_avatar(self.user_id, self.avatar_path)
+            avatar_URL = upload_avatar(self.user_id, self.avatar_path)
+            print(avatar_URL)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

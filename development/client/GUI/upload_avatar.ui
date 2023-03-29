@@ -60,10 +60,10 @@ text-align: right;</string>
    <widget class="QPushButton" name="avatar">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>120</y>
-      <width>300</width>
-      <height>300</height>
+      <x>100</x>
+      <y>130</y>
+      <width>400</width>
+      <height>400</height>
      </rect>
     </property>
     <property name="cursor">
@@ -86,30 +86,12 @@ border-radius: 20px;
     </property>
     <property name="iconSize">
      <size>
-      <width>300</width>
-      <height>300</height>
+      <width>350</width>
+      <height>350</height>
      </size>
     </property>
     <property name="default">
      <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="submit_button">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>500</y>
-      <width>200</width>
-      <height>50</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-radius: 20px;
-background-color: rgb(246, 224, 181);
-font: 75 18pt &quot;MS Shell Dlg 2&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Submit</string>
     </property>
    </widget>
   </widget>

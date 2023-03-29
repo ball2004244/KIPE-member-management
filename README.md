@@ -37,6 +37,10 @@ To run the system in production mode, please follow these steps:
 2. The server is already hosted at http://kipevietnam.com/hr_server, so you don't need to run the server file. However, you can still check it out in the production folder. 
 3. Run the file production/client/gui_design.py using python. This is a configurated application that connect to the online server.
 
+## Tech Stack
+- Python 3, PyQt5, MySQL, CSS, Firebase
+- HTTP, JSON, SHA256
+
 ## Current Development Progress
 Version 1.0.0: 03/14/2023
 - Initialize connection to online server
@@ -51,9 +55,14 @@ What may come up in the next version:
 - Member can set their own avatar and title.
 - The hyperlink will function properly.
 
-Version 1.0.1: 03/21/2023 (estimated)
+Version 1.0.1: 03/28/2023 
 - Finished edit/delete deadlines
 - Finished update member information
 - Hyperlink navigates to right page
 - Member can see real deadlines from the server
-- Working on Avatar and Title
+- Finished set avatar
+
+Version 1.0.2: 04/11/2023 (expected)
+- Implementing data caching to improve performance
+- Release the application for production
+- Host the server on the same domain as the website

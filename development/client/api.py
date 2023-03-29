@@ -1,5 +1,6 @@
 import requests
 from hashing import hash_password
+from firebase import upload_image, get_image
 URL = "http://localhost:8000"
 
 '''MANIPULATING USERS'''
@@ -131,25 +132,18 @@ def login(email: str, password: str):
 
 '''UPLOAD IMAGE'''
 def upload_avatar(user_id: int, avatar_path: str):
-    params = {'avatar': True}
+    # send the image to firebase storage
+    image = open(avatar_path, 'rb')
 
-    # send the image to the server
-    headers = {'Content-Type': 'multipart/form-data'}
+    image_URL = upload_image(f'{user_id}.jpg', image)
+    image.close()
 
-    # read the binary data from the file object
-    with open(avatar_path, 'rb') as file:
-        data = file.read()
+    return image_URL
 
-    # encode the data as a multipart form-data request
-    files = {'avatar': (f'{user_id}.jpg', data, 'image/jpeg')}
+def get_avatar(user_id: int):
+    # get the image from firebase storage
+    return get_image(f'{user_id}.jpg')
 
-    # send the request
-    response = requests.post(URL, headers=headers, files=files)
-
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print("Error: " + str(response.status_code))
 
 if __name__ == '__main__':
     # data = {'id': 6,

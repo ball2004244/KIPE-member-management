@@ -1,6 +1,5 @@
 import mysql.connector
 from datetime import datetime
-from firebase import upload_to_firebase_storage
 from auth import verify_login, hash_password
 
 class ConnectToMySQL():
@@ -442,22 +441,6 @@ class ConnectToMySQL():
 
 database = ConnectToMySQL()
 
-def upload_avatar(data: dict):
-    try: 
-        print(data)
-        # uid = data['uid']
-        # avatar = data['avatar']
-
-        # # convert uid to a string with ending .jpg
-        # filename = str(uid) + '.jpg'
-        # upload_to_firebase_storage(filename, avatar)
-        return {'status': 'success', 'message': 'Upload avatar successfully'}
-    
-    except Exception as e:
-        print('Fail to upload avatar')
-        print(e)
-        return {'status': 'fail', 'message': 'Fail to upload avatar'}
-    
 
 if __name__ == '__main__':
     '''
