@@ -37,6 +37,8 @@ To run the system in production mode, please follow these steps:
 2. The server is already hosted at http://kipevietnam.com/hr_server, so you don't need to run the server file. However, you can still check it out in the production folder. 
 3. Run the file production/client/gui_design.py using python. This is a configurated application that connect to the online server.
 
+*NOTE: You might need an account to login, ask me for help!
+
 ## Tech Stack
 - Python 3, PyQt5, MySQL, CSS, Firebase
 - HTTP, JSON, SHA256
@@ -49,7 +51,7 @@ Version 1.0.0: 03/14/2023
 - HR can interact with the built-in calendar to view and add new deadlines. Remaining task: Edit/delete deadlines.
 - Member can view their deadlines by interacting with the calendar. Remaining task: Fetch real deadlines from the server.
 
-What may come up in the next version:
+Ver 1.0.1: 03/28/2023
 - HR can edit member information and edit/delete deadlines.
 - Member can see real deadlines from the server.
 - Member can set their own avatar and title.
