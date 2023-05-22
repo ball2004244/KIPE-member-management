@@ -37,7 +37,7 @@ To run the system in production mode, please follow these steps:
 2. The server is already hosted at http://kipevietnam.com/hr_server, so you don't need to run the server file. However, you can still check it out in the production folder. 
 3. Run the file production/client/gui_design.py using python. This is a configurated application that connect to the online server.
 
-*NOTE: You might need an account to login, ask me for help!
+*NOTE: You might need an account to login, ask me for help!*
 
 ## Tech Stack
 - Python 3, PyQt5, MySQL, CSS, Firebase
