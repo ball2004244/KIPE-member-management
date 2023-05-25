@@ -4,7 +4,7 @@ from firebase_admin import credentials, storage
 
 cred = credentials.Certificate('firebase.json')
 firebase_admin.initialize_app(cred, {
-        'storageBucket': 'kipe-management.appspot.com'
+        'storageBucket': '' # Firebase URL
     })
 
 def upload_image(name: str, image: bytes):
