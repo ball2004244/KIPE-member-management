@@ -41,7 +41,6 @@ To run the system in production mode, please follow these steps:
 
 ## Tech Stack
 - Python 3, PyQt5, MySQL, CSS, Firebase
-- HTTP, JSON, SHA256
 
 ## Current Development Progress
 Version 1.0.0: 03/14/2023
@@ -68,3 +67,6 @@ Version 1.0.2: 04/11/2023 (expected)
 - Implementing data caching to improve performance
 - Release the application for production
 - Host the server on the same domain as the website
+
+**Notice**
+This project is archived and can only be used for reference only. Our website will be rolled down from kipevietnam.com since Aug 2023. 
